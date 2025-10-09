@@ -6,7 +6,7 @@ function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,15 +25,13 @@ function App() {
       if (current) setActiveSection(current);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+  
 
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
+      
     };
   }, []);
 
@@ -51,15 +49,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
-      {/* Cursor follower */}
-      <div
-        className="fixed pointer-events-none z-50 w-6 h-6 border-2 border-cyan-400 rounded-full transition-transform duration-200 ease-out hidden lg:block"
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
+     
 
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -159,7 +149,7 @@ function App() {
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
                 <span className="block text-gray-400 text-2xl sm:text-3xl mb-2">Hi, I'm</span>
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
-                  Your Name
+                  Sridhar
                 </span>
               </h1>
               <p className="text-xl sm:text-2xl text-gray-400 font-light">
@@ -211,7 +201,7 @@ function App() {
                       <div className="w-32 h-32 mx-auto bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center animate-float">
                         <Code2 className="w-16 h-16 text-white" />
                       </div>
-                      <p className="text-gray-400 text-sm">Your image here</p>
+                      <p className="text-gray-400 text-sm">Sridhar Image</p>
                     </div>
                   </div>
                 </div>
@@ -252,11 +242,11 @@ function App() {
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-cyan-500 transition-all duration-300 transform hover:scale-105 hover:-translate-y-2">
-                  <div className="text-3xl font-bold text-cyan-400 mb-2">50+</div>
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">10+</div>
                   <div className="text-gray-400">Projects Completed</div>
                 </div>
                 <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition-all duration-300 transform hover:scale-105 hover:-translate-y-2">
-                  <div className="text-3xl font-bold text-blue-400 mb-2">5+</div>
+                  <div className="text-3xl font-bold text-blue-400 mb-2">2+</div>
                   <div className="text-gray-400">Years Experience</div>
                 </div>
               </div>
@@ -591,9 +581,9 @@ function App() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              { Icon: Mail, title: 'Email', info: 'your.email@example.com', color: 'cyan' },
-              { Icon: Github, title: 'GitHub', info: 'github.com/yourusername', color: 'blue' },
-              { Icon: Linkedin, title: 'LinkedIn', info: 'linkedin.com/in/yourprofile', color: 'purple' }
+              { Icon: Mail, title: 'Email', info: 'your.email@example.com', color: 'green' },
+              { Icon: Github, title: 'GitHub', info: 'github.com/yourusername', color: 'gray' },
+              { Icon: Linkedin, title: 'LinkedIn', info: 'linkedin.com/in/yourprofile', color: 'blue' }
             ].map((contact, index) => (
               <div
                 key={contact.title}
@@ -671,7 +661,7 @@ function App() {
               ))}
             </div>
             <p className="text-gray-400 text-sm">
-              © 2025 Your Name. All rights reserved.
+              © 2025 Sridhar. All rights reserved.
             </p>
             <p className="text-gray-500 text-xs">
               Built with React, TypeScript & Tailwind CSS
