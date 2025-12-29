@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import resumePdf from './Assets/SRIDHAR-RESUME.pdf';
 import profileImg from './Assets/20250810_093517.jpg';
-import collegeImg from './Assets/projects/hitech.png';
+import collegeImg from './Assets/projects/Hitech.png';
 import aarogyaImg from './Assets/projects/AarogyaJal.png';
 import portfolioImg from './Assets/projects/Portfolio.png';
 
