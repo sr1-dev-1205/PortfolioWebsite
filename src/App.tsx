@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import {
   Menu,
@@ -8,7 +9,6 @@ import {
   Mail,
   Code2,
   ArrowUp,
-  Briefcase,
   Calendar,
   Brush,
   Layout,
