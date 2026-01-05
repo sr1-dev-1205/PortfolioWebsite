@@ -6,12 +6,14 @@ import { ArrowUp } from 'lucide-react';
 import StarBackground from './components/StarBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Portfolio from './components/Portfolio';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+
+// Lazy Load below-the-fold sections
+const About = React.lazy(() => import('./components/About'));
+const Skills = React.lazy(() => import('./components/Skills'));
+const Experience = React.lazy(() => import('./components/Experience'));
+const Portfolio = React.lazy(() => import('./components/Portfolio'));
+const Contact = React.lazy(() => import('./components/Contact'));
 
 // Assets
 import resumePdf from './Assets/SRIDHAR-RESUME.pdf';
@@ -103,18 +105,16 @@ function App() {
           profileImg={profileImg}
         />
 
-        <About />
-
-        <Skills />
-
-        <Experience />
-
-        <Portfolio />
-
-        <Contact
-          formStatus={formStatus}
-          handleContactSubmit={handleContactSubmit}
-        />
+        <React.Suspense fallback={<div className="h-screen w-full flex items-center justify-center text-accent-cyan/50">Loading...</div>}>
+          <About />
+          <Skills />
+          <Experience />
+          <Portfolio />
+          <Contact
+            formStatus={formStatus}
+            handleContactSubmit={handleContactSubmit}
+          />
+        </React.Suspense>
       </main>
 
       <Footer />

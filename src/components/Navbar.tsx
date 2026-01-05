@@ -62,6 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-300 focus:outline-none"
+                            aria-label="Toggle menu"
                         >
                             {isMenuOpen ? <X className="h-6 w-6 text-accent-cyan" /> : <Menu className="h-6 w-6" />}
                         </button>
@@ -77,8 +78,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
                             key={item}
                             onClick={() => scrollToSection(item.toLowerCase())}
                             className={`block w-full text-left px-3 py-3 rounded-md text-base font-medium transition-all duration-300 ${activeSection === item.toLowerCase()
-                                    ? 'bg-accent-cyan/10 text-accent-cyan border-l-4 border-accent-cyan'
-                                    : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                                ? 'bg-accent-cyan/10 text-accent-cyan border-l-4 border-accent-cyan'
+                                : 'text-gray-300 hover:bg-white/5 hover:text-white'
                                 }`}
                         >
                             {item}

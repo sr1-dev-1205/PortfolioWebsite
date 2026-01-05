@@ -21,7 +21,10 @@ const StarBackground: React.FC = () => {
         };
 
         const initStars = () => {
-            const starCount = Math.floor((window.innerWidth * window.innerHeight) / 2000); // Responsive density
+            const isMobile = window.innerWidth < 768;
+            const density = isMobile ? 4000 : 2500; // MUCH lower density on mobile
+            const starCount = Math.floor((window.innerWidth * window.innerHeight) / density);
+
             stars = [];
             for (let i = 0; i < starCount; i++) {
                 stars.push({
@@ -39,28 +42,42 @@ const StarBackground: React.FC = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#FFF';
 
+            // Check if user prefers reduced motion
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
             stars.forEach((star) => {
                 ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-                ctx.fill();
 
-                // Move stars
-                star.y -= star.speed;
-
-                // Reset if off screen
-                if (star.y < 0) {
-                    star.y = canvas.height;
-                    star.x = Math.random() * canvas.width;
+                // Performance: Draw tiny stars as rectangles (faster than arc)
+                if (star.radius < 1) {
+                    ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                    ctx.fillRect(star.x, star.y, star.radius * 2, star.radius * 2);
+                } else {
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                    ctx.fill();
                 }
 
-                // Twinkle effect
-                if (Math.random() > 0.99) {
-                    star.opacity = Math.random();
+                if (!prefersReducedMotion) {
+                    // Move stars only if not reduced motion
+                    star.y -= star.speed;
+
+                    // Reset if off screen
+                    if (star.y < 0) {
+                        star.y = canvas.height;
+                        star.x = Math.random() * canvas.width;
+                    }
+
+                    // Twinkle effect (less frequent for performance)
+                    if (Math.random() > 0.995) {
+                        star.opacity = Math.random();
+                    }
                 }
             });
 
-            animationFrameId = requestAnimationFrame(drawStars);
+            if (!prefersReducedMotion) {
+                animationFrameId = requestAnimationFrame(drawStars);
+            }
         };
 
         window.addEventListener('resize', handleResize);

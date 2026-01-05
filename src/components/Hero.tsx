@@ -101,7 +101,9 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 group-hover:border-accent-cyan/50 transition-all duration-500 transform group-hover:scale-105 shadow-2xl bg-space-900">
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-space-900/40 z-10"></div>
                                 <img
-                                    loading="lazy"
+                                    loading="eager"
+                                    // @ts-ignore
+                                    fetchpriority="high"
                                     src={profileImg}
                                     alt="Sridhar Profile"
                                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"

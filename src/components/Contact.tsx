@@ -10,6 +10,26 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) => {
     const [isFormFocused, setIsFormFocused] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect(); // Once loaded, keep it loaded
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <section id="contact" className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
@@ -184,11 +204,13 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                     <div className="flex justify-center items-center relative min-h-[300px] lg:min-h-[400px]">
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-accent-purple/5 blur-[100px] rounded-full pointer-events-none"></div>
                         <div className={`transition-all duration-700 ${isFormFocused ? 'scale-90 opacity-80 blur-[1px]' : 'scale-100 opacity-100'} `}>
-                            <Planet
-                                size={500}
-                                isPaused={isFormFocused}
-                                className="cursor-grab active:cursor-grabbing w-full max-w-[260px] aspect-square sm:max-w-[400px] lg:max-w-[500px] !h-auto"
-                            />
+                            {isVisible && (
+                                <Planet
+                                    size={500}
+                                    isPaused={isFormFocused}
+                                    className="cursor-grab active:cursor-grabbing w-full max-w-[260px] aspect-square sm:max-w-[400px] lg:max-w-[500px] !h-auto"
+                                />
+                            )}
                         </div>
 
                         {/* Decorative Orbital Rings */}
@@ -197,6 +219,9 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
 
                 </div>
             </div>
+
+            {/* Scroll Observer for Planet Lazy Loading */}
+            <div ref={sectionRef} className="absolute inset-0 pointer-events-none" />
         </section>
     );
 };
