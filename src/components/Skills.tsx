@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Skills: React.FC = () => {
     return (
@@ -9,7 +10,13 @@ const Skills: React.FC = () => {
             <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                <div className="text-center mb-20 animate-fadeInUp">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-20"
+                >
                     <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
                         Tech <span className="gradient-text">Stack</span>
                     </h2>
@@ -17,7 +24,7 @@ const Skills: React.FC = () => {
                     <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
                         Technologies I work with to build modern, scalable web applications
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Tech Stack Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-20">
@@ -31,11 +38,14 @@ const Skills: React.FC = () => {
                         { name: 'Tailwind', category: 'Styling', color: '#06B6D4', svg: 'M12 2L2 7v5c0 7 10 10 10 10s10-3 10-10V7L12 2z' },
                         { name: 'Git', category: 'Version Control', color: '#F05032', svg: 'M12 2L3 7v10l9 5 9-5V7l-9-5z M12 12l-6 3V9l6-3 6 3v6l-6-3z' }
                     ].map((tech, index) => (
-                        <div
+                        <motion.div
                             key={tech.name}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="group relative glass-card p-6 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
                             style={{
-                                animationDelay: `${index * 50}ms`,
                                 ['--hover-color' as any]: tech.color
                             }}
                         >
@@ -64,27 +74,36 @@ const Skills: React.FC = () => {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
                 {/* Additional Skills */}
-                <div className="text-center animate-fadeInUp delay-300 relative">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="text-center relative"
+                >
                     <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent -z-10"></div>
                     <h3 className="text-2xl font-bold mb-8 text-gray-300 inline-block bg-space-900 px-4">Also Familiar With</h3>
 
                     <div className="flex flex-wrap justify-center gap-3">
                         {['npm', 'VS Code', 'Netlify', 'Vercel', 'C Programming', 'Python', 'Vite', 'Java', 'AI Tools', 'Figma'].map((skill, index) => (
-                            <span
+                            <motion.span
                                 key={skill}
-                                className="px-5 py-2 glass-card rounded-full text-sm text-gray-400 hover:text-white hover:border-accent-cyan/50 hover:bg-accent-cyan/10 transition-all duration-300 transform hover:scale-110 cursor-default"
-                                style={{ animationDelay: `${0.7 + index * 0.05}s` }}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.4, delay: 0.5 + (index * 0.05) }}
+                                className="px-5 py-2 glass-card rounded-full text-sm text-gray-400 hover:text-white hover:border-accent-cyan/50 hover:bg-accent-cyan/10 transition-colors duration-300 transform hover:scale-110 cursor-default"
                             >
                                 {skill}
-                            </span>
+                            </motion.span>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

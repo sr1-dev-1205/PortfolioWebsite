@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Github, Linkedin, Send } from 'lucide-react';
 import Planet from './Planet';
 
@@ -10,26 +10,6 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) => {
     const [isFormFocused, setIsFormFocused] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect(); // Once loaded, keep it loaded
-                }
-            },
-            { threshold: 0.1 }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
 
     return (
         <section id="contact" className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
@@ -42,7 +22,13 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
 
                     {/* Left Column: Content + Form */}
                     <div>
-                        <div className="mb-12 animate-fadeInUp text-center md:text-left">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="mb-12 text-center md:text-left"
+                        >
                             <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
                                 Get In <span className="gradient-text">Touch</span>
                             </h2>
@@ -50,7 +36,7 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                             <p className="text-gray-400 mt-6 text-lg">
                                 Have a project in mind? Let's work together to create something amazing!
                             </p>
-                        </div>
+                        </motion.div>
 
                         {/* Contact Cards */}
                         <div className="grid grid-cols-3 gap-4 mb-10">
@@ -91,19 +77,28 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                                     aria-label={`Contact via ${contact.title}`}
                                     className="block"
                                 >
-                                    <div
-                                        className={`glass-card p-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 group ${contact.border} ${contact.bg} animate-fadeInUp flex flex-col items-center justify-center h-full`}
-                                        style={{ animationDelay: `${index * 0.1}s` }}
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                                        className={`glass-card p-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 group ${contact.border} ${contact.bg} flex flex-col items-center justify-center h-full`}
                                     >
                                         <contact.Icon className={`w-6 h-6 ${contact.color} ${contact.hoverColor} transition-colors mb-2`} />
                                         <span className="text-sm font-semibold text-gray-300 hidden sm:block">{contact.title}</span>
-                                    </div>
+                                    </motion.div>
                                 </a>
                             ))}
                         </div>
 
                         {/* Contact Form */}
-                        <div className="glass-card p-8 rounded-2xl border-t border-white/10 relative overflow-hidden animate-fadeInUp delay-300">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            className="glass-card p-8 rounded-2xl border-t border-white/10 relative overflow-hidden"
+                        >
                             <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 to-accent-purple/5 pointer-events-none"></div>
 
                             {formStatus === 'success' && (
@@ -177,7 +172,7 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                                     type="submit"
                                     disabled={formStatus === 'loading'}
                                     className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 relative overflow-hidden group
-                                ${formStatus === 'loading'
+                            ${formStatus === 'loading'
                                             ? 'bg-slate-700 cursor-not-allowed opacity-70'
                                             : 'bg-gradient-to-r from-accent-cyan via-blue-600 to-accent-purple hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-[1.02]'
                                         } `}
@@ -197,21 +192,24 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                                     </span>
                                 </button>
                             </form>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Right Column: Interactive Planet */}
                     <div className="flex justify-center items-center relative min-h-[300px] lg:min-h-[400px]">
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-accent-purple/5 blur-[100px] rounded-full pointer-events-none"></div>
-                        <div className={`transition-all duration-700 ${isFormFocused ? 'scale-90 opacity-80 blur-[1px]' : 'scale-100 opacity-100'} `}>
-                            {isVisible && (
-                                <Planet
-                                    size={500}
-                                    isPaused={isFormFocused}
-                                    className="cursor-grab active:cursor-grabbing w-full max-w-[260px] aspect-square sm:max-w-[400px] lg:max-w-[500px] !h-auto"
-                                />
-                            )}
-                        </div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className={`transition-all duration-700 flex items-center justify-center ${isFormFocused ? 'scale-90 opacity-80 blur-[1px]' : 'scale-100 opacity-100'} `}
+                        >
+                            <Planet
+                                isPaused={isFormFocused}
+                                className="cursor-grab active:cursor-grabbing w-[260px] sm:w-[400px] lg:w-[500px] aspect-square shrink-0 mx-auto"
+                            />
+                        </motion.div>
 
                         {/* Decorative Orbital Rings */}
                         <div className="absolute inset-0 border border-white/5 rounded-full animate-spin-slow pointer-events-none scale-125 opacity-30"></div>
@@ -220,11 +218,9 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
                 </div>
             </div>
 
-            {/* Scroll Observer for Planet Lazy Loading */}
-            <div ref={sectionRef} className="absolute inset-0 pointer-events-none" />
+            {/* Scroll Observer for Planet Lazy Loading - REMOVED */}
         </section>
     );
 };
 
 export default Contact;
-
