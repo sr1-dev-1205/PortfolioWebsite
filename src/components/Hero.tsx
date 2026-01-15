@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, Github, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
     scrollToSection: (sectionId: string) => void;
@@ -13,7 +14,12 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     {/* Text Content */}
-                    <div className="text-center md:text-left space-y-8 animate-fadeInUp relative z-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-center md:text-left space-y-8 relative z-20 order-last md:order-none"
+                    >
                         <div className="inline-block relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                             <span className="relative px-4 py-2 bg-black rounded-full border border-accent-cyan/30 text-accent-cyan text-sm font-medium tracking-wider flex items-center gap-2">
@@ -51,7 +57,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                         <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start pt-6">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className="group relative px-8 py-4 bg-transparent border border-accent-cyan/50 text-accent-cyan font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:border-accent-cyan"
+                                className="group relative px-8 py-4 bg-transparent border border-accent-cyan/50 text-accent-cyan font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:border-accent-cyan flex items-center justify-center"
                             >
                                 <div className="absolute inset-0 w-0 bg-accent-cyan transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
                                 <span className="relative flex items-center gap-2">Contact Me</span>
@@ -86,10 +92,15 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                 </a>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Image/Visual Content */}
-                    <div className="relative flex justify-center perspective-1000 animate-fadeInUp delay-200 z-10">
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="relative flex justify-center perspective-1000 z-10 order-first md:order-none mt-8 md:mt-0"
+                    >
                         {/* Orbiting Elements - Subtler decorative background instead of full planet */}
                         <div className="absolute w-full md:w-[120%] h-full md:h-[120%] border border-accent-cyan/10 rounded-full animate-spin-slow pointer-events-none"></div>
                         <div className="absolute w-[90%] h-[90%] border border-accent-purple/10 rounded-full animate-spin pointer-events-none" style={{ animationDuration: '25s', animationDirection: 'reverse' }}></div>
@@ -98,7 +109,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                             <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan to-accent-purple rounded-full blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity duration-500 animate-pulse-slow"></div>
 
                             {/* Profile Image Container */}
-                            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 group-hover:border-accent-cyan/50 transition-all duration-500 transform group-hover:scale-105 shadow-2xl bg-space-900">
+                            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 group-hover:border-accent-cyan/50 transition-all duration-500 transform group-hover:scale-105 shadow-2xl bg-space-900 aspect-square isolate transform-gpu">
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-space-900/40 z-10"></div>
                                 <img
                                     loading="eager"
@@ -121,16 +132,26 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Scroll Down Indicator */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer opacity-50 hover:opacity-100 transition-opacity" onClick={() => scrollToSection('about')}>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-2 md:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer hidden md:block"
+                onClick={() => scrollToSection('about')}
+            >
                 <div className="w-6 h-10 border-2 border-accent-cyan rounded-full flex justify-center pt-2">
-                    <div className="w-1 h-2 bg-accent-cyan rounded-full animate-fade-down"></div>
+                    <motion.div
+                        animate={{ y: [0, 12, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-1 h-2 bg-accent-cyan rounded-full"
+                    ></motion.div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };

@@ -1,12 +1,19 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
 const Experience: React.FC = () => {
     return (
         <section id="experience" className="min-h-screen flex items-center justify-center py-24 relative">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="text-center mb-20 animate-fadeInUp">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-20"
+                >
                     <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
                         Experience <span className="gradient-text">Timeline</span>
                     </h2>
@@ -14,7 +21,7 @@ const Experience: React.FC = () => {
                     <p className="text-gray-400 mt-6">
                         Internship and academic project experience
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="relative">
                     {/* Timeline Line */}
@@ -22,7 +29,13 @@ const Experience: React.FC = () => {
 
                     <div className="space-y-12">
                         {/* Internship Experience */}
-                        <div className="relative animate-fadeInUp">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="relative"
+                        >
                             <div className="md:flex items-center">
                                 {/* Left Side Content */}
                                 <div className="md:w-1/2 md:pr-12 md:text-right">
@@ -62,10 +75,16 @@ const Experience: React.FC = () => {
                                 {/* Right Side Spacer */}
                                 <div className="md:w-1/2 md:pl-12"></div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* College Project Experience */}
-                        <div className="relative animate-fadeInUp delay-200">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className="relative"
+                        >
                             <div className="md:flex items-center">
                                 {/* Left Side Spacer */}
                                 <div className="md:w-1/2 md:pr-12"></div>
@@ -105,7 +124,7 @@ const Experience: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

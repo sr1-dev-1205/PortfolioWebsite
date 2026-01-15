@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // Components
 import StarBackground from './components/StarBackground';
@@ -17,7 +18,25 @@ const Contact = React.lazy(() => import('./components/Contact'));
 
 // Assets
 import resumePdf from './Assets/SRIDHAR-RESUME.pdf';
-import profileImg from './Assets/20250810_093517.jpg';
+import profileImg from './Assets/Profile1.jpg';
+
+const AmbientOrb = () => (
+  <motion.div
+    className="fixed top-[10%] right-[5%] w-64 h-64 bg-accent-cyan rounded-full blur-[80px] pointer-events-none z-0"
+    initial={{ opacity: 0 }}
+    animate={{
+      y: [0, -40, 0],
+      x: [0, 20, 0],
+      opacity: [0.05, 0.08, 0.05],
+      scale: [1, 1.1, 1],
+    }}
+    transition={{
+      duration: 15,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+);
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -88,6 +107,7 @@ function App() {
 
       {/* Dynamic Star Background */}
       <StarBackground />
+      <AmbientOrb />
 
       {/* Navigation */}
       <Navbar
@@ -121,13 +141,17 @@ function App() {
 
       {/* Scroll to Top Button */}
       {showScrollTop && (
-        <button
+        <motion.button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-accent-cyan/10 border border-accent-cyan/50 rounded-full flex items-center justify-center text-accent-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-accent-cyan hover:text-black hover:scale-110 transition-all duration-300 animate-fadeInUp group"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-accent-cyan/10 border border-accent-cyan/50 rounded-full flex items-center justify-center text-accent-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-accent-cyan hover:text-black transition-colors duration-300 group"
           aria-label="Scroll to top"
         >
           <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
-        </button>
+        </motion.button>
       )}
     </div>
   );

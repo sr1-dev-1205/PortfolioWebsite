@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import collegeImg from '../Assets/projects/Hitech.png';
 import aarogyaImg from '../Assets/projects/AarogyaJal.png';
 import portfolioImg from '../Assets/projects/Portfolio.png';
@@ -38,19 +39,28 @@ const Portfolio: React.FC = () => {
     return (
         <section id="portfolio" className="min-h-screen flex items-center justify-center py-24 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="text-center mb-20 animate-fadeInUp">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-20"
+                >
                     <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
                         My <span className="gradient-text">Portfolio</span>
                     </h2>
                     <div className="w-24 h-1 bg-gradient-to-r from-accent-cyan to-accent-blue mx-auto rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
-                </div>
+                </motion.div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <div
+                        <motion.div
                             key={project.title}
-                            className="group relative glass-card rounded-2xl overflow-hidden animate-fadeInUp flex flex-col h-full"
-                            style={{ animationDelay: `${index * 0.1}s` }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="group relative glass-card rounded-2xl overflow-hidden flex flex-col h-full"
                         >
                             {/* Image Container */}
                             <div className="relative h-48 overflow-hidden">
@@ -100,7 +110,7 @@ const Portfolio: React.FC = () => {
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

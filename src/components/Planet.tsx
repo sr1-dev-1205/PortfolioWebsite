@@ -5,7 +5,6 @@ import * as THREE from 'three';
 import moonImg from '../Assets/textures/moon.jpg';
 
 interface PlanetProps {
-    size?: number;
     className?: string;
     isPaused?: boolean;
 }
@@ -146,11 +145,11 @@ const PlanetScene = React.memo(({ isPaused }: { isPaused: boolean }) => (
     </>
 ));
 
-const Planet: React.FC<PlanetProps> = ({ size = 300, className = '', isPaused = false }) => {
+const Planet: React.FC<PlanetProps> = ({ className = '', isPaused = false }) => {
     return (
         <div
-            className={`relative rounded-full overflow-hidden ${className} transition-opacity duration-500`}
-            style={{ width: size, height: size, touchAction: 'none' }}
+            className={`relative rounded-full overflow-hidden ${className} transition-opacity duration-500 aspect-square transform-gpu isolate`}
+            style={{ touchAction: 'none' }}
         >
             <Canvas
                 camera={{ position: [0, 0, 6], fov: 45 }}
