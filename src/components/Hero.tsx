@@ -218,7 +218,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                     <div className="relative w-full h-full rounded-sm overflow-hidden border-2 border-grid-glow shadow-[0_0_30px_rgba(0,240,255,0.2)]">
                                         <img
                                             loading="eager"
-                                            // @ts-ignore
+                                            // @ts-expect-error: fetchpriority is not yet in React types
                                             fetchpriority="high"
                                             src={profileImg}
                                             alt="Sridhar Profile - Engineer"
