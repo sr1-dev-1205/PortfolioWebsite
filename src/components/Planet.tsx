@@ -121,29 +121,36 @@ const Moon = React.memo(({ isPaused }: { isPaused: boolean }) => {
     );
 });
 
-const PlanetScene = React.memo(({ isPaused }: { isPaused: boolean }) => (
-    <>
-        {/* Cinematic & Realistic Lighting Setup */}
+const PlanetScene = React.memo(({ isPaused }: { isPaused: boolean }) => {
+    const [hovered, setHover] = React.useState(false);
 
-        {/* Very low ambient light to create deep shadows in craters (high contrast) */}
-        <ambientLight intensity={0.03} />
+    return (
+        <group 
+            onPointerOver={() => setHover(true)} 
+            onPointerOut={() => setHover(false)}
+        >
+            {/* Cinematic & Realistic Lighting Setup */}
 
-        {/* Main Light: Grazing angle (side-lit) to emphasize texture and bumps */}
-        <directionalLight
-            position={[8, 1, 3]}
-            intensity={2.8}
-        />
+            {/* Very low ambient light to create deep shadows in craters (high contrast) */}
+            <ambientLight intensity={hovered ? 0.1 : 0.03} />
 
-        {/* Rim Light: Cool blue backlight for subtle silhouette separation */}
-        <pointLight
-            position={[-5, 2, -6]}
-            intensity={0.8}
-            color="#aaddff"
-        />
+            {/* Main Light: Grazing angle (side-lit) to emphasize texture and bumps */}
+            <directionalLight
+                position={[8, 1, 3]}
+                intensity={hovered ? 5.0 : 2.8}
+            />
 
-        <Moon isPaused={isPaused} />
-    </>
-));
+            {/* Rim Light: Cool blue backlight for subtle silhouette separation */}
+            <pointLight
+                position={[-5, 2, -6]}
+                intensity={hovered ? 2.0 : 0.8}
+                color="#aaddff"
+            />
+
+            <Moon isPaused={isPaused} />
+        </group>
+    );
+});
 
 const Planet: React.FC<PlanetProps> = ({ className = '', isPaused = false }) => {
     return (

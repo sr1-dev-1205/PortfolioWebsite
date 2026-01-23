@@ -6,10 +6,10 @@ import CyberPanel from './CyberPanel';
 
 const About: React.FC = () => {
     const stats = [
-        { label: 'Year', value: '3rd Year', icon: Shield },
+        { label: 'Education', value: '3rd Year', icon: Shield },
         { label: 'Projects', value: '5+', icon: Target },
         { label: 'Coffee', value: 'Infinite', icon: Coffee },
-        { label: 'Clients', value: 'Open Source', icon: Globe }
+        { label: 'Status', value: 'Freelancer', icon: Globe }
     ];
 
     const values = [
@@ -40,13 +40,13 @@ const About: React.FC = () => {
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// SYSTEM_MODULE</span>
+                        <span className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400">// SYSTEM_MODULE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         PROFILE.SYS
                     </h2>
-                    <p className="text-sm text-gray-500 font-mono">// Engineer identity and core parameters loaded</p>
+                    <p className="text-base text-gray-400 font-mono">// Engineer identity and core parameters loaded</p>
                 </motion.div>
 
                 <div className="flex flex-col lg:flex-row gap-12 items-start">
@@ -63,20 +63,19 @@ const About: React.FC = () => {
                                 <span className="w-8 h-px bg-accent-cyan/50"></span>
                                 About Me
                             </h2>
-                            <RevealText 
-                                text="Building the future of the web with clean architecture." 
-                                className="text-4xl md:text-6xl font-display font-extrabold leading-tight tracking-tighter section-header-glow" 
-                            />
+                            <h2 className="text-4xl md:text-5xl font-cyber font-black leading-tight tracking-tighter section-header-glow">
+                                Architecting Scalable <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-blue">Digital Solutions.</span>
+                            </h2>
                         </div>
 
-                        <div className="space-y-6 text-gray-500 text-base leading-relaxed font-sans max-w-3xl border-l-2 border-grid-line pl-6">
-                            <p className="font-mono text-xs text-gray-700 uppercase tracking-widest mb-4">&gt; IDENTITY_LOG:</p>
+                        <div className="space-y-6 text-gray-100 text-lg leading-relaxed font-sans max-w-3xl border-l-2 border-neon-cyan pl-6">
+                            <p className="font-mono text-sm text-neon-cyan uppercase tracking-widest mb-4 font-bold">&gt; IDENTITY_LOG:</p>
                             <p>
-                                I am a <span className="text-neon-cyan font-semibold">3rd year Computer Science Engineering student</span> at Hindusthan Institute of Technology with a deep passion for frontend development. I specialize in building highly interactive and performance-driven web applications.
+                                Passionate <span className="text-neon-cyan font-bold">CS Engineer</span> & <span className="text-neon-magenta font-bold">Frontend Architect</span> crafting high-performance digital experiences. Specializing in intuitive interfaces and clean code.
                             </p>
 
                             <p>
-                                Currently, I am expanding my horizons as a <span className="text-neon-magenta font-semibold">Frontend Developer Intern</span>, where I leverage React and Tailwind CSS to solve real-world problems. My goal is to bridge the gap between complex backend systems and intuitive user interfaces.
+                                Bridging the gap between <span className="text-gray-300 font-bold">complex systems</span> and <span className="text-white font-bold">seamless user experiences</span>.
                             </p>
                         </div>
 
@@ -91,8 +90,8 @@ const About: React.FC = () => {
                                 >
                                     <div className="p-6 space-y-3">
                                         <stat.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-500" />
-                                        <div className="text-3xl font-cyber font-black text-white">{stat.value}</div>
-                                        <div className="text-[9px] text-gray-600 uppercase tracking-[0.25em] font-mono">{stat.label}</div>
+                                        <div className="text-xl md:text-2xl font-cyber font-black text-white break-words">{stat.value}</div>
+                                        <div className="text-[10px] text-gray-400 uppercase tracking-[0.25em] font-mono">{stat.label}</div>
                                     </div>
                                 </CyberPanel>
                             ))}
@@ -114,7 +113,7 @@ const About: React.FC = () => {
                                         <v.icon className="w-5 h-5" />
                                     </div>
                                     <h3 className="text-lg font-cyber font-black text-white uppercase tracking-wider">{v.title}</h3>
-                                    <p className="text-xs text-gray-500 leading-relaxed font-sans">{v.desc}</p>
+                                    <p className="text-sm text-gray-400 leading-relaxed font-sans">{v.desc}</p>
                                 </div>
                             </CyberPanel>
                         ))}

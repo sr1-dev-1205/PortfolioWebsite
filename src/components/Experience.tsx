@@ -39,13 +39,13 @@ const Experience: React.FC = () => {
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// CAREER_TIMELINE</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// CAREER_TIMELINE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         EXPERIENCE_LOG.DAT
                     </h2>
-                    <p className="text-sm text-gray-500 font-mono">// System capability progression records</p>
+                    <p className="text-sm text-gray-300 font-mono">// System capability progression records</p>
                 </motion.div>
 
                 <div className="relative">
@@ -85,7 +85,7 @@ const Experience: React.FC = () => {
                                                 </div>
                                             </div>
                                             
-                                            <p className="text-gray-500 text-sm font-sans leading-relaxed">
+                                            <p className="text-gray-300 text-sm font-sans leading-relaxed">
                                                 {exp.description}
                                             </p>
 
@@ -93,7 +93,7 @@ const Experience: React.FC = () => {
                                                 {exp.tech.map((t) => (
                                                     <span 
                                                         key={t} 
-                                                        className="px-3 py-1.5 bg-terminal-surface border border-grid-line rounded-sm text-[9px] text-gray-600 font-mono uppercase tracking-wider hover:text-white hover:border-neon-cyan/50 transition-all cursor-default"
+                                                        className="px-3 py-1.5 bg-terminal-surface border border-grid-line rounded-sm text-[9px] text-gray-400 font-mono uppercase tracking-wider hover:text-white hover:border-neon-cyan/50 transition-all cursor-default"
                                                     >
                                                         {t}
                                                     </span>
@@ -102,7 +102,7 @@ const Experience: React.FC = () => {
                                             
                                             <div className="flex items-center gap-2 pt-4 border-t border-grid-line">
                                                 <Calendar className="w-4 h-4 text-neon-cyan" />
-                                                <span className="text-[9px] text-gray-600 font-mono uppercase tracking-widest">{exp.period}</span>
+                                                <span className="text-xs text-neon-cyan font-mono uppercase tracking-widest font-bold">{exp.period}</span>
                                             </div>
                                         </div>
                                     </CyberPanel>
@@ -121,12 +121,12 @@ const Experience: React.FC = () => {
 
                                 {/* Date/Side Label - Neon Style */}
                                 <div className="w-full md:w-[45%] hidden md:block">
-                                    <div className={`text-7xl font-cyber font-black uppercase tracking-tighter opacity-[0.03] ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
+                                    <div className={`text-7xl font-cyber font-black uppercase tracking-tighter opacity-[0.08] ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
                                         {exp.period.split('-')[0].trim()}
                                     </div>
-                                    <div className={`text-[10px] font-mono font-bold uppercase tracking-[0.4em] mt-2 flex items-center gap-2 ${index % 2 === 0 ? 'justify-start ml-2' : 'justify-end mr-2'}`}>
+                                    <div className={`text-xs font-mono font-bold uppercase tracking-[0.4em] mt-2 flex items-center gap-2 ${index % 2 === 0 ? 'justify-start ml-2' : 'justify-end mr-2'}`}>
                                         <span style={{ color: exp.color }}>▶</span>
-                                        <span className="text-gray-700">PHASE_{index + 1}_ACTIVE</span>
+                                        <span className="text-gray-400">PHASE_{index + 1}_ACTIVE</span>
                                     </div>
                                 </div>
                             </motion.div>
