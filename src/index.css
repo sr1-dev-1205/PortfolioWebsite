@@ -5,39 +5,182 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #050505;
+    background-color: #0A0E14;
   }
 
   body {
-    @apply bg-[#050505] text-white overflow-x-hidden selection:bg-accent-cyan selection:text-black;
+    @apply bg-terminal-black text-white overflow-x-hidden antialiased font-sans;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "salt";
+    text-rendering: optimizeLegibility;
+    /* Cyberpunk selection */
+    selection:bg-neon-cyan;
+    selection:text-terminal-black;
+  }
+
+  /* Accessibility: Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .terminal-scanlines,
+    .cyber-grid {
+      opacity: 0.3;
+    }
+  }
+
+  /* Focus Visible - Cyberpunk Style */
+  *:focus-visible {
+    outline: 2px solid #00F0FF;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #00F0FF;
+    outline-offset: 2px;
+  }
+  
+  /* CYBERPUNK GRID ARCHITECTURE */
+  .cyber-grid {
+    background-size: 80px 80px;
+    background-image: 
+      linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+    position: relative;
+  }
+
+  .cyber-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 14, 20, 0.95) 80%);
+    pointer-events: none;
+  }
+
+  /* Terminal Scanlines */
+  .terminal-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 240, 255, 0.03) 3px
+    );
+    pointer-events: none;
   }
   
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-[#050505];
+    @apply bg-[#030303];
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-accent-cyan/50 rounded-full hover:bg-accent-cyan;
+    @apply bg-accent-cyan/30 rounded-full hover:bg-accent-cyan/60 transition-colors;
   }
 }
 
 @layer components {
-  /* Glassmorphism Cards */
-  .glass-card {
-    @apply bg-opacity-10 bg-white backdrop-blur-lg border border-white/10 shadow-xl;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  /* Noise Texture Overlay */
+  .noise-overlay::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.02;
+    z-index: 50;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
-  .glass-card-hover {
-    @apply transition-all duration-500 ease-out hover:border-accent-cyan/30 hover:bg-white/5 hover:shadow-accent-cyan/20 hover:shadow-2xl hover:-translate-y-1;
+  /* CYBERPUNK PANEL SYSTEM */
+  .cyber-panel {
+    @apply bg-terminal-surface border border-grid-line shadow-[0_0_20px_rgba(0,240,255,0.05)];
+    position: relative;
   }
 
-  /* Neon Text Utilities */
+  .cyber-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cyber-panel:hover::before {
+    opacity: 1;
+  }
+
+  .cyber-panel-elevated {
+    @apply cyber-panel bg-terminal-elevated border-grid-glow shadow-[0_0_30px_rgba(0,240,255,0.1)];
+  }
+
+  /* HUD Borders */
+  .hud-border {
+    position: relative;
+  }
+
+  .hud-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    background: linear-gradient(90deg, 
+      rgba(0, 240, 255, 0.6) 0%, 
+      transparent 30%, 
+      transparent 70%, 
+      rgba(0, 240, 255, 0.6) 100%
+    ) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* NEON TEXT SYSTEM */
+  .neon-text-cyan {
+    color: #00F0FF;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5),
+                 0 0 20px rgba(0, 240, 255, 0.3),
+                 0 0 30px rgba(0, 240, 255, 0.2);
+  }
+
+  .neon-text-magenta {
+    color: #FF00AA;
+    text-shadow: 0 0 10px rgba(255, 0, 170, 0.5),
+                 0 0 20px rgba(255, 0, 170, 0.3);
+  }
+
+  .neon-text-green {
+    color: #39FF14;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5),
+                 0 0 20px rgba(57, 255, 20, 0.3);
+  }
+
+  .terminal-header {
+    @apply font-cyber font-bold uppercase tracking-[0.3em] text-neon-cyan neon-text-cyan;
+  }
+
+  .data-label {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-gray-500;
+  }
+
+  /* Legacy Neon Text Utilities */
   .text-glow-cyan {
     text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
   }
@@ -48,7 +191,7 @@
 
   /* Fancy Gradients */
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-cyan via-blue-500 to-accent-purple;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-accent-cyan to-accent-blue bg-[length:200%_auto] animate-gradient-slow;
   }
   
   .gradient-border-bottom {
@@ -58,18 +201,30 @@
   .gradient-border-bottom::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -2px;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(90deg, transparent, #00F0FF, transparent);
     transform: scaleX(0);
     transform-origin: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   }
   
   .gradient-border-bottom:hover::after {
     transform: scaleX(1);
+  }
+
+  .magnetic-wrap {
+    display: inline-block;
+  }
+
+  .text-glow-white {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  .section-header-glow {
+    @apply text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)];
   }
 }
 
@@ -104,5 +259,10 @@
   
   .mask-gradient-fade {
     mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  }
+
+  @keyframes scan {
+    0% { top: -10%; }
+    100% { top: 110%; }
   }
 }

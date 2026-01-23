@@ -1,122 +1,122 @@
 import React from 'react';
-import { Brush, Layout, Smartphone, TrendingUp } from 'lucide-react';
+import { Shield, Target, Coffee, Globe, Zap, User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import RevealText from './RevealText';
+import CyberPanel from './CyberPanel';
 
 const About: React.FC = () => {
+    const stats = [
+        { label: 'Year', value: '3rd Year', icon: Shield },
+        { label: 'Projects', value: '5+', icon: Target },
+        { label: 'Coffee', value: 'Infinite', icon: Coffee },
+        { label: 'Clients', value: 'Open Source', icon: Globe }
+    ];
+
+    const values = [
+        {
+            title: "Performance First",
+            desc: "Optimizing every byte for the fastest possible load times.",
+            icon: Zap,
+            color: "text-accent-cyan"
+        },
+        {
+            title: "Accessible Design",
+            desc: "Inclusive interfaces that work for everyone, everywhere.",
+            icon: User,
+            color: "text-accent-purple"
+        }
+    ];
+
     return (
-        <section id="about" className="min-h-screen flex items-center justify-center py-24 relative">
+        <section id="about" className="py-20 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {/* Terminal Section Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="text-center mb-20"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
-                        About <span className="gradient-text">Me</span>
+                    <div className="inline-flex items-center gap-3 mb-6">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// SYSTEM_MODULE</span>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
+                    </div>
+                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
+                        PROFILE.SYS
                     </h2>
-                    <div className="w-24 h-1 bg-gradient-to-r from-accent-cyan to-accent-blue mx-auto rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
+                    <p className="text-sm text-gray-500 font-mono">// Engineer identity and core parameters loaded</p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-16 items-start">
-                    <div className="space-y-8">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="glass-card p-8 rounded-2xl relative overflow-hidden group"
-                        >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-accent-cyan/10 rounded-full blur-2xl -mr-16 -mt-16 transition-all duration-500 group-hover:bg-accent-cyan/20"></div>
-
-                            <p className="text-gray-300 text-lg leading-relaxed mb-6 font-light">
-                                I am a <span className="text-accent-cyan font-medium">3rd year Computer Science Engineering student</span> with a strong interest in frontend
-                                development and modern web technologies. I enjoy building responsive, user-friendly
-                                interfaces that focus on clean design and smooth user experience.
-                            </p>
-
-                            <p className="text-gray-300 text-lg leading-relaxed font-light">
-                                Currently, I am gaining practical experience as a <span className="text-accent-purple font-medium">Frontend Developer Intern</span>, where I work
-                                with React and Tailwind CSS. Alongside my internship, I actively build academic and personal projects to strengthen my skills.
-                            </p>
-                        </motion.div>
-
-                        <div className="grid grid-cols-2 gap-6 pt-4">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.4 }}
-                                className="glass-card p-6 rounded-xl hover:border-accent-cyan/50 transition-all duration-300 transform hover:-translate-y-1"
-                            >
-                                <div className="text-4xl font-bold text-accent-cyan mb-2">5+</div>
-                                <div className="text-gray-400 text-sm tracking-widest uppercase">Projects Built</div>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.5 }}
-                                className="glass-card p-6 rounded-xl hover:border-accent-blue/50 transition-all duration-300 transform hover:-translate-y-1"
-                            >
-                                <div className="text-2xl font-bold text-accent-blue mb-2">Sep 2025</div>
-                                <div className="text-gray-400 text-sm tracking-widest uppercase">Internship Started</div>
-                            </motion.div>
+                <div className="flex flex-col lg:flex-row gap-12 items-start">
+                    {/* Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true }}
+                        className="flex-1 space-y-8"
+                    >
+                        <div className="space-y-4">
+                            <h2 className="text-accent-cyan font-mono text-sm tracking-widest uppercase flex items-center gap-2">
+                                <span className="w-8 h-px bg-accent-cyan/50"></span>
+                                About Me
+                            </h2>
+                            <RevealText 
+                                text="Building the future of the web with clean architecture." 
+                                className="text-4xl md:text-6xl font-display font-extrabold leading-tight tracking-tighter section-header-glow" 
+                            />
                         </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {[
-                            {
-                                Icon: Brush,
-                                title: 'Clean UI',
-                                desc: 'Readable & Structured',
-                                color: 'text-accent-cyan',
-                                bg: 'bg-accent-cyan/10',
-                                border: 'border-accent-cyan/20'
-                            },
-                            {
-                                Icon: Layout,
-                                title: 'Frontend Focus',
-                                desc: 'React • TS • Tailwind',
-                                color: 'text-accent-blue',
-                                bg: 'bg-accent-blue/10',
-                                border: 'border-accent-blue/20'
-                            },
-                            {
-                                Icon: Smartphone,
-                                title: 'Responsive',
-                                desc: 'Mobile-first Design',
-                                color: 'text-accent-purple',
-                                bg: 'bg-accent-purple/10',
-                                border: 'border-accent-purple/20'
-                            },
-                            {
-                                Icon: TrendingUp,
-                                title: 'Growth',
-                                desc: 'Continuous Learning',
-                                color: 'text-accent-pink',
-                                bg: 'bg-accent-pink/10',
-                                border: 'border-accent-pink/20'
-                            },
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: 0.3 + (index * 0.1) }}
-                                className={`p-6 rounded-xl border glass-card hover:bg-space-800 transition-all duration-300 transform hover:scale-105 group ${item.border} flex flex-col items-center text-center md:items-start md:text-left`}
+                        <div className="space-y-6 text-gray-500 text-base leading-relaxed font-sans max-w-3xl border-l-2 border-grid-line pl-6">
+                            <p className="font-mono text-xs text-gray-700 uppercase tracking-widest mb-4">&gt; IDENTITY_LOG:</p>
+                            <p>
+                                I am a <span className="text-neon-cyan font-semibold">3rd year Computer Science Engineering student</span> at Hindusthan Institute of Technology with a deep passion for frontend development. I specialize in building highly interactive and performance-driven web applications.
+                            </p>
+
+                            <p>
+                                Currently, I am expanding my horizons as a <span className="text-neon-magenta font-semibold">Frontend Developer Intern</span>, where I leverage React and Tailwind CSS to solve real-world problems. My goal is to bridge the gap between complex backend systems and intuitive user interfaces.
+                            </p>
+                        </div>
+
+                        {/* Stats Grid - Data Modules */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                            {stats.map((stat, index) => (
+                                <CyberPanel
+                                    key={index}
+                                    status="active"
+                                    corner="tl"
+                                    className="group"
+                                >
+                                    <div className="p-6 space-y-3">
+                                        <stat.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-500" />
+                                        <div className="text-3xl font-cyber font-black text-white">{stat.value}</div>
+                                        <div className="text-[9px] text-gray-600 uppercase tracking-[0.25em] font-mono">{stat.label}</div>
+                                    </div>
+                                </CyberPanel>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Side Panels - Core Values */}
+                    <div className="w-full lg:w-80 space-y-4">
+                        {values.map((v, i) => (
+                            <CyberPanel
+                                key={i}
+                                status={i === 0 ? 'active' : 'standby'}
+                                corner="all"
+                                glowColor={v.color === 'text-accent-cyan' ? 'rgba(0, 240, 255, 0.3)' : 'rgba(160, 32, 240, 0.3)'}
+                                className="group"
                             >
-                                <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${item.bg} ${item.color} group-hover:scale-110 transition-transform`}>
-                                    <item.Icon className="w-6 h-6" />
+                                <div className="p-6 space-y-4">
+                                    <div className={`p-3 rounded-sm bg-terminal-black w-fit ${v.color} group-hover:scale-110 transition-transform duration-500`}>
+                                        <v.icon className="w-5 h-5" />
+                                    </div>
+                                    <h3 className="text-lg font-cyber font-black text-white uppercase tracking-wider">{v.title}</h3>
+                                    <p className="text-xs text-gray-500 leading-relaxed font-sans">{v.desc}</p>
                                 </div>
-
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-accent-cyan transition-colors">{item.title}</h3>
-                                <p className="text-gray-400 text-sm">{item.desc}</p>
-                            </motion.div>
+                            </CyberPanel>
                         ))}
                     </div>
                 </div>

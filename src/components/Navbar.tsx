@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Code2 } from 'lucide-react';
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import Magnetic from './Magnetic';
 
 interface NavbarProps {
     activeSection: string;
@@ -11,6 +13,12 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpen, scrollToSection }) => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     useEffect(() => {
         const handleScroll = () => {
@@ -21,72 +29,108 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-space-900/80 backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled ? 'py-4' : 'py-6'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20">
-                    {/* Logo */}
-                    <div className="flex-shrink-0 cursor-pointer group" onClick={() => scrollToSection('home')}>
-                        <div className="flex items-center space-x-3">
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-accent-cyan blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                <div className="relative w-10 h-10 bg-space-800 border border-accent-cyan/50 rounded-lg flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
-                                    <Code2 className="w-6 h-6 text-accent-cyan" />
-                                </div>
-                            </div>
-                            <span className="text-xl font-bold tracking-wider text-white">
-                                Sridhar <span className="text-accent-cyan">Dev</span>
-                            </span>
+                <div className={`relative flex items-center justify-between h-16 px-6 rounded-sm transition-all duration-700 border-b ${isScrolled ? 'bg-terminal-dark/95 backdrop-blur-2xl border-grid-glow shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-transparent border-transparent'}`}>
+                    {/* Logo - System Identifier */}
+                    <div className="flex-shrink-0 cursor-pointer group flex items-center gap-3" onClick={() => scrollToSection('home')}>
+                        <div className="relative w-8 h-8 bg-gradient-to-br from-neon-cyan to-neon-blue border border-neon-cyan/50 rounded-sm flex items-center justify-center font-cyber font-black text-terminal-black text-sm transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] group-hover:scale-110">
+                            S
+                        </div>
+                        <div className="hidden sm:flex flex-col">
+                            <span className="text-[10px] font-cyber font-black tracking-[0.3em] uppercase text-neon-cyan">SRIDHAR</span>
+                            <span className="text-[7px] text-gray-600 font-mono uppercase tracking-[0.2em]">FRONTEND_SYS</span>
                         </div>
                     </div>
 
-                    {/* Desktop Navigation */}
+                    {/* Desktop Navigation - HUD Style */}
                     <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-8">
-                            {['Home', 'About', 'Skills', 'Experience', 'Portfolio', 'Contact'].map((item) => (
-                                <button
-                                    key={item}
-                                    onClick={() => scrollToSection(item.toLowerCase())}
-                                    className={`relative px-1 py-2 text-sm font-medium transition-colors duration-300 group ${activeSection === item.toLowerCase() ? 'text-accent-cyan' : 'text-gray-300 hover:text-white'
+                        <div className="flex items-center gap-1">
+                            {['About', 'Skills', 'Experience', 'Portfolio', 'Contact'].map((item) => (
+                                <Magnetic key={item} strength={0.1}>
+                                    <button
+                                        onClick={() => scrollToSection(item.toLowerCase())}
+                                        className={`relative px-5 py-2 text-[9px] font-mono font-bold uppercase tracking-[0.25em] transition-all duration-300 rounded-sm group ${
+                                            activeSection === item.toLowerCase() 
+                                                ? 'text-neon-cyan' 
+                                                : 'text-gray-500 hover:text-gray-300'
                                         }`}
-                                >
-                                    {item}
-                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-accent-cyan transform origin-left transition-transform duration-300 ${activeSection === item.toLowerCase() ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                                        }`}></span>
-                                </button>
+                                    >
+                                        {item}
+                                        {activeSection === item.toLowerCase() && (
+                                            <motion.div
+                                                layoutId="activeSection"
+                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-neon-cyan shadow-[0_0_10px_rgba(0,240,255,0.8)]"
+                                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                            />
+                                        )}
+                                    </button>
+                                </Magnetic>
                             ))}
                         </div>
                     </div>
 
-                    {/* Mobile menu button */}
+                    {/* Command Hint - Terminal Style */}
+                    <div className="hidden lg:flex items-center gap-2 text-[8px] text-gray-600 font-mono tracking-[0.3em] bg-terminal-surface px-3 py-1.5 rounded-sm border border-grid-line uppercase">
+                        <span className="px-1.5 py-0.5 bg-terminal-black rounded-sm text-neon-cyan">CTRL</span>
+                        <span>+</span>
+                        <span className="px-1.5 py-0.5 bg-terminal-black rounded-sm text-neon-cyan">K</span>
+                    </div>
+
+                    {/* Mobile menu button - Cyberpunk Style */}
                     <div className="md:hidden">
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-300 focus:outline-none"
-                            aria-label="Toggle menu"
-                        >
-                            {isMenuOpen ? <X className="h-6 w-6 text-accent-cyan" /> : <Menu className="h-6 w-6" />}
-                        </button>
+                        <Magnetic strength={0.2}>
+                            <button
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                className="p-3 bg-terminal-surface border border-grid-line rounded-sm text-neon-cyan hover:border-neon-cyan transition-all"
+                                aria-label="Toggle menu"
+                            >
+                                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                            </button>
+                        </Magnetic>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile Navigation */}
-            <div className={`md:hidden absolute w-full bg-space-900/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 ease-in-out origin-top ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    {['Home', 'About', 'Skills', 'Experience', 'Portfolio', 'Contact'].map((item) => (
-                        <button
-                            key={item}
-                            onClick={() => scrollToSection(item.toLowerCase())}
-                            className={`block w-full text-left px-3 py-3 rounded-md text-base font-medium transition-all duration-300 ${activeSection === item.toLowerCase()
-                                ? 'bg-accent-cyan/10 text-accent-cyan border-l-4 border-accent-cyan'
-                                : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                                }`}
-                        >
-                            {item}
-                        </button>
-                    ))}
-                </div>
-            </div>
+            {/* Scroll Progress Bar - Neon Style */}
+            <motion.div
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-neon-cyan shadow-[0_0_10px_rgba(0,240,255,0.8)] origin-left z-[101]"
+                style={{ scaleX }}
+            />
+
+            {/* Mobile Navigation - Terminal Overlay */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="md:hidden fixed inset-0 z-[-1] bg-terminal-black/98 backdrop-blur-2xl"
+                    >
+                        <div className="flex flex-col items-center justify-center h-full space-y-6 px-6">
+                            {['Home', 'About', 'Skills', 'Experience', 'Portfolio', 'Contact'].map((item, index) => (
+                                <motion.button
+                                    key={item}
+                                    initial={{ x: -50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    exit={{ x: -50, opacity: 0 }}
+                                    transition={{ delay: index * 0.05 }}
+                                    onClick={() => scrollToSection(item.toLowerCase())}
+                                    className={`text-2xl sm:text-3xl font-cyber font-black uppercase tracking-[0.3em] transition-all duration-300 relative group ${
+                                        activeSection === item.toLowerCase() ? 'text-neon-cyan' : 'text-gray-600'
+                                    }`}
+                                >
+                                    <span className="text-neon-cyan text-sm mr-3">&gt;</span>
+                                    {item}
+                                    {activeSection === item.toLowerCase() && (
+                                        <div className="absolute left-0 right-0 bottom-0 h-0.5 bg-neon-cyan shadow-[0_0_10px_rgba(0,240,255,0.8)]"></div>
+                                    )}
+                                </motion.button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 };

@@ -8,6 +8,9 @@ import StarBackground from './components/StarBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
+import CommandPalette from './components/CommandPalette';
+import DataStream from './components/DataStream';
 
 // Lazy Load below-the-fold sections
 const About = React.lazy(() => import('./components/About'));
@@ -20,20 +23,18 @@ const Contact = React.lazy(() => import('./components/Contact'));
 import resumePdf from './Assets/SRIDHAR-RESUME.pdf';
 import profileImg from './Assets/Profile1.jpg';
 
-const AmbientOrb = () => (
+const AmbientOrb = ({ color = "bg-accent-cyan" }: { color?: string }) => (
   <motion.div
-    className="fixed top-[10%] right-[5%] w-64 h-64 bg-accent-cyan rounded-full blur-[80px] pointer-events-none z-0"
-    initial={{ opacity: 0 }}
+    className={`fixed w-[500px] h-[500px] ${color} rounded-full blur-[120px] pointer-events-none z-0 opacity-[0.03]`}
     animate={{
-      y: [0, -40, 0],
-      x: [0, 20, 0],
-      opacity: [0.05, 0.08, 0.05],
+      y: [0, 50, 0],
+      x: [0, -30, 0],
       scale: [1, 1.1, 1],
     }}
     transition={{
-      duration: 15,
+      duration: 20,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: "linear",
     }}
   />
 );
@@ -103,11 +104,31 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden relative font-sans selection:bg-accent-cyan selection:text-black">
+    <div className="min-h-screen bg-terminal-black text-white overflow-x-hidden relative font-sans selection:bg-neon-cyan selection:text-terminal-black">
+      
+      {/* CYBERPUNK SYSTEM LAYERS */}
+      {/* Terminal Grid */}
+      <div className="fixed inset-0 cyber-grid pointer-events-none z-0"></div>
+      
+      {/* Scanlines */}
+      <div className="fixed inset-0 terminal-scanlines pointer-events-none z-[1] opacity-30"></div>
+      
+      {/* Data Streams */}
+      <DataStream count={15} speed={3} color="rgba(0, 240, 255, 0.2)" />
+      
+      {/* Ambient Lighting (reduced for cyberpunk) */}
+      <div className="fixed top-[-20%] left-[-10%] opacity-30">
+        <AmbientOrb color="bg-neon-cyan" />
+      </div>
+      <div className="fixed bottom-[-20%] right-[-10%] opacity-20">
+        <AmbientOrb color="bg-neon-magenta" />
+      </div>
+
+      <CustomCursor />
+      <CommandPalette scrollToSection={scrollToSection} />
 
       {/* Dynamic Star Background */}
       <StarBackground />
-      <AmbientOrb />
 
       {/* Navigation */}
       <Navbar

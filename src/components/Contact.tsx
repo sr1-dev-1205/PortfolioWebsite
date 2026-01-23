@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Send } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, MapPin } from 'lucide-react';
 import Planet from './Planet';
+import Magnetic from './Magnetic';
+import CyberPanel from './CyberPanel';
 
 interface ContactProps {
     formStatus: string;
@@ -12,213 +14,187 @@ const Contact: React.FC<ContactProps> = ({ formStatus, handleContactSubmit }) =>
     const [isFormFocused, setIsFormFocused] = useState(false);
 
     return (
-        <section id="contact" className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute bottom-0 left-0 w-full h-[500px] bg-gradient-to-t from-accent-purple/10 to-transparent pointer-events-none"></div>
-
+        <section id="contact" className="py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+                {/* Terminal Section Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-20"
+                >
+                    <div className="inline-flex items-center gap-3 mb-6">
+                        <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// COMMUNICATION_PORT</span>
+                        <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
+                    </div>
+                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
+                        CONTACT.EXE
+                    </h2>
+                    <p className="text-sm text-gray-500 font-mono">// Establish secure communication channel</p>
+                </motion.div>
 
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-
-                    {/* Left Column: Content + Form */}
-                    <div>
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="mb-12 text-center md:text-left"
+                <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    {/* Left Column - Contact Info */}
+                    <div className="space-y-8">
+                        {/* Contact Methods */}
+                        <CyberPanel
+                            label="CONTACT_INFO"
+                            status="active"
+                            corner="all"
+                            glowColor="rgba(0, 240, 255, 0.3)"
                         >
-                            <h2 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
-                                Get In <span className="gradient-text">Touch</span>
-                            </h2>
-                            <div className="w-24 h-1 bg-gradient-to-r from-accent-cyan to-accent-blue rounded-full shadow-[0_0_10px_rgba(0,240,255,0.5)] mx-auto md:mx-0"></div>
-                            <p className="text-gray-400 mt-6 text-lg">
-                                Have a project in mind? Let's work together to create something amazing!
-                            </p>
-                        </motion.div>
+                            <div className="p-8 space-y-6">
+                                <div className="flex items-center gap-4 group">
+                                    <div className="p-3 bg-terminal-black rounded-sm border border-neon-cyan">
+                                        <Mail className="w-5 h-5 text-neon-cyan" />
+                                    </div>
+                                    <div>
+                                        <div className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono">Email Protocol</div>
+                                        <a href="mailto:sridhars200612@gmail.com" className="text-white hover:text-neon-cyan transition-colors text-sm font-mono">sridhars200612@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 group">
+                                    <div className="p-3 bg-terminal-black rounded-sm border border-neon-magenta">
+                                        <MapPin className="w-5 h-5 text-neon-magenta" />
+                                    </div>
+                                    <div>
+                                        <div className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono">Geographic Location</div>
+                                        <div className="text-white text-sm font-mono">India, Worldwide</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </CyberPanel>
 
-                        {/* Contact Cards */}
-                        <div className="grid grid-cols-3 gap-4 mb-10">
+                        {/* Social Links */}
+                        <div className="flex gap-4">
                             {[
-                                {
-                                    Icon: Mail,
-                                    title: 'Email',
-                                    color: 'text-emerald-400',
-                                    hoverColor: 'group-hover:text-emerald-300',
-                                    border: 'hover:border-emerald-500/50',
-                                    bg: 'hover:bg-emerald-500/10',
-                                    href: 'mailto:sridhars200612@gmail.com'
-                                },
-                                {
-                                    Icon: Github,
-                                    title: 'GitHub',
-                                    color: 'text-gray-300',
-                                    hoverColor: 'group-hover:text-white',
-                                    border: 'hover:border-white/50',
-                                    bg: 'hover:bg-white/10',
-                                    href: 'https://github.com/sr1-dev-1205'
-                                },
-                                {
-                                    Icon: Linkedin,
-                                    title: 'LinkedIn',
-                                    color: 'text-blue-400',
-                                    hoverColor: 'group-hover:text-blue-300',
-                                    border: 'hover:border-blue-500/50',
-                                    bg: 'hover:bg-blue-500/10',
-                                    href: 'https://www.linkedin.com/in/sridhar1208-dev'
-                                }
-                            ].map((contact, index) => (
-                                <a
-                                    key={contact.title}
-                                    href={contact.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={`Contact via ${contact.title}`}
-                                    className="block"
-                                >
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                                        className={`glass-card p-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 group ${contact.border} ${contact.bg} flex flex-col items-center justify-center h-full`}
+                                { Icon: Github, href: 'https://github.com/sr1-dev-1205', label: 'GITHUB' },
+                                { Icon: Linkedin, href: 'https://www.linkedin.com/in/sridhar1208-dev', label: 'LINKEDIN' }
+                            ].map((social, i) => (
+                                <Magnetic key={i}>
+                                    <a 
+                                        href={social.href} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="flex-1 p-5 bg-terminal-surface border border-grid-line rounded-sm hover:border-neon-cyan transition-all group"
+                                        title={social.label}
                                     >
-                                        <contact.Icon className={`w-6 h-6 ${contact.color} ${contact.hoverColor} transition-colors mb-2`} />
-                                        <span className="text-sm font-semibold text-gray-300 hidden sm:block">{contact.title}</span>
-                                    </motion.div>
-                                </a>
+                                        <social.Icon className="w-6 h-6 text-gray-500 group-hover:text-neon-cyan transition-colors mx-auto" />
+                                        <div className="text-[8px] text-gray-700 uppercase tracking-widest font-mono text-center mt-2">{social.label}</div>
+                                    </a>
+                                </Magnetic>
                             ))}
                         </div>
 
-                        {/* Contact Form */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                            className="glass-card p-8 rounded-2xl border-t border-white/10 relative overflow-hidden"
+                        {/* Decorative Element */}
+                        <div className="relative pt-8 hidden lg:block">
+                            <Planet
+                                isPaused={isFormFocused}
+                                className="w-full max-w-[300px] aspect-square grayscale opacity-30 hover:grayscale-0 hover:opacity-60 transition-all duration-1000"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right Column: Terminal Input Interface */}
+                    <CyberPanel
+                        label="INPUT_TERMINAL"
+                        status="standby"
+                        corner="all"
+                        glowColor="rgba(0, 240, 255, 0.2)"
+                    >
+                        <form
+                            action="https://formspree.io/f/mjgvpajl"
+                            method="POST"
+                            onSubmit={handleContactSubmit}
+                            onFocus={() => setIsFormFocused(true)}
+                            onBlur={() => setIsFormFocused(false)}
+                            className="p-8 space-y-6"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 to-accent-purple/5 pointer-events-none"></div>
-
-                            {formStatus === 'success' && (
-                                <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 animate-fadeInUp">
-                                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                                    ✅ Thanks for reaching out! I’ll get back to you soon.
-                                </div>
-                            )}
-
-                            {formStatus === 'error' && (
-                                <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center gap-3 animate-fadeInUp">
-                                    <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                                    ❌ Something went wrong. Please try again later.
-                                </div>
-                            )}
-
-                            <form
-                                action="https://formspree.io/f/mjgvpajl"
-                                method="POST"
-                                onSubmit={handleContactSubmit}
-                                onFocus={() => setIsFormFocused(true)}
-                                onBlur={() => setIsFormFocused(false)}
-                                className="space-y-6 relative z-10"
-                            >
+                            <div className="space-y-6">
                                 <div className="grid md:grid-cols-2 gap-6">
-                                    <div className="group">
-                                        <input type="hidden" name="_subject" value="New message from Portfolio Website" />
-                                        <label className="block text-sm font-medium mb-2 text-gray-300 group-focus-within:text-accent-cyan transition-colors">Name</label>
+                                    <div className="space-y-2">
+                                        <label className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono flex items-center gap-2">
+                                            <span className="text-neon-cyan">&gt;</span> INPUT_NAME
+                                        </label>
                                         <input
                                             name="name"
                                             type="text"
-                                            className="w-full px-4 py-3 bg-space-900/50 border border-slate-700 rounded-xl focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan outline-none transition-all duration-300 placeholder-gray-600 text-white"
-                                            placeholder="Your name"
+                                            className="w-full px-4 py-3 bg-terminal-black border border-grid-line rounded-sm focus:border-neon-cyan focus:bg-terminal-surface outline-none transition-all placeholder:text-gray-700 text-white font-mono text-sm"
+                                            placeholder="john.doe"
                                             required
                                         />
                                     </div>
-                                    <div className="group">
-                                        <label className="block text-sm font-medium mb-2 text-gray-300 group-focus-within:text-accent-cyan transition-colors">Email</label>
+                                    <div className="space-y-2">
+                                        <label className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono flex items-center gap-2">
+                                            <span className="text-neon-cyan">&gt;</span> INPUT_EMAIL
+                                        </label>
                                         <input
                                             name="email"
                                             type="email"
-                                            className="w-full px-4 py-3 bg-space-900/50 border border-slate-700 rounded-xl focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan outline-none transition-all duration-300 placeholder-gray-600 text-white"
-                                            placeholder="your.email@example.com"
+                                            className="w-full px-4 py-3 bg-terminal-black border border-grid-line rounded-sm focus:border-neon-cyan focus:bg-terminal-surface outline-none transition-all placeholder:text-gray-700 text-white font-mono text-sm"
+                                            placeholder="john@domain.com"
                                             required
                                         />
                                     </div>
                                 </div>
-
-                                <div className="group">
-                                    <label className="block text-sm font-medium mb-2 text-gray-300 group-focus-within:text-accent-cyan transition-colors">Subject</label>
+                                <div className="space-y-2">
+                                    <label className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono flex items-center gap-2">
+                                        <span className="text-neon-cyan">&gt;</span> INPUT_SUBJECT
+                                    </label>
                                     <input
                                         name="subject"
                                         type="text"
-                                        className="w-full px-4 py-3 bg-space-900/50 border border-slate-700 rounded-xl focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan outline-none transition-all duration-300 placeholder-gray-600 text-white"
-                                        placeholder="What's this about?"
+                                        className="w-full px-4 py-3 bg-terminal-black border border-grid-line rounded-sm focus:border-neon-cyan focus:bg-terminal-surface outline-none transition-all placeholder:text-gray-700 text-white font-mono text-sm"
+                                        placeholder="Project inquiry"
                                     />
                                 </div>
-
-                                <div className="group">
-                                    <label className="block text-sm font-medium mb-2 text-gray-300 group-focus-within:text-accent-cyan transition-colors">Message</label>
+                                <div className="space-y-2">
+                                    <label className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono flex items-center gap-2">
+                                        <span className="text-neon-cyan">&gt;</span> INPUT_MESSAGE
+                                    </label>
                                     <textarea
                                         name="message"
-                                        rows={6}
-                                        className="w-full px-4 py-3 bg-space-900/50 border border-slate-700 rounded-xl focus:border-accent-cyan focus:ring-1 focus:ring-accent-cyan outline-none transition-all duration-300 resize-none placeholder-gray-600 text-white"
-                                        placeholder="Your message..."
+                                        rows={5}
+                                        className="w-full px-4 py-3 bg-terminal-black border border-grid-line rounded-sm focus:border-neon-cyan focus:bg-terminal-surface outline-none transition-all resize-none placeholder:text-gray-700 text-white font-mono text-sm leading-relaxed"
+                                        placeholder="Describe your project requirements..."
                                         required
                                     ></textarea>
                                 </div>
+                            </div>
 
+                            <Magnetic strength={0.1}>
                                 <button
                                     type="submit"
                                     disabled={formStatus === 'loading'}
-                                    className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 relative overflow-hidden group
-                            ${formStatus === 'loading'
-                                            ? 'bg-slate-700 cursor-not-allowed opacity-70'
-                                            : 'bg-gradient-to-r from-accent-cyan via-blue-600 to-accent-purple hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:scale-[1.02]'
-                                        } `}
+                                    className="w-full py-5 bg-neon-cyan text-terminal-black font-cyber font-black uppercase tracking-[0.3em] text-[10px] rounded-sm hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] transition-all disabled:opacity-50 flex items-center justify-center gap-3 group border-2 border-neon-cyan"
                                 >
-                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                                    <span className="relative flex items-center justify-center gap-2">
-                                        {formStatus === 'loading' ? (
-                                            <>
-                                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                                                Sending...
-                                            </>
-                                        ) : (
-                                            <>
-                                                Send Message <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                            </>
-                                        )}
-                                    </span>
+                                    {formStatus === 'loading' ? '[ TRANSMITTING... ]' : (
+                                        <>
+                                            [ TRANSMIT_SIGNAL ]
+                                            <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                                        </>
+                                    )}
                                 </button>
-                            </form>
-                        </motion.div>
-                    </div>
+                            </Magnetic>
 
-                    {/* Right Column: Interactive Planet */}
-                    <div className="flex justify-center items-center relative min-h-[300px] lg:min-h-[400px]">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-accent-purple/5 blur-[100px] rounded-full pointer-events-none"></div>
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className={`transition-all duration-700 flex items-center justify-center ${isFormFocused ? 'scale-90 opacity-80 blur-[1px]' : 'scale-100 opacity-100'} `}
-                        >
-                            <Planet
-                                isPaused={isFormFocused}
-                                className="cursor-grab active:cursor-grabbing w-[260px] sm:w-[400px] lg:w-[500px] aspect-square shrink-0 mx-auto"
-                            />
-                        </motion.div>
-
-                        {/* Decorative Orbital Rings */}
-                        <div className="absolute inset-0 border border-white/5 rounded-full animate-spin-slow pointer-events-none scale-125 opacity-30"></div>
-                    </div>
-
+                            {formStatus === 'success' && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="p-4 bg-terminal-black border border-neon-green rounded-sm"
+                                >
+                                    <p className="text-neon-green text-center text-[10px] font-mono tracking-[0.3em] uppercase flex items-center justify-center gap-2">
+                                        <span className="animate-pulse">●</span>
+                                        [OK] TRANSMISSION_COMPLETE
+                                    </p>
+                                </motion.div>
+                            )}
+                        </form>
+                    </CyberPanel>
                 </div>
             </div>
-
-            {/* Scroll Observer for Planet Lazy Loading - REMOVED */}
         </section>
     );
 };
