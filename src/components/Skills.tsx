@@ -4,16 +4,28 @@ import { motion } from 'framer-motion';
 import Magnetic from './Magnetic';
 import CyberPanel from './CyberPanel';
 
+interface TechSkill {
+    name: string;
+    category: string;
+    color: string;
+    logo: string;
+    className?: string;
+}
+
 const Skills: React.FC = () => {
-    const techStack = [
-        { name: 'HTML5', category: 'Frontend', color: '#E34F26' },
-        { name: 'CSS3', category: 'Frontend', color: '#1572B6' },
-        { name: 'JavaScript', category: 'Language', color: '#F7DF1E' },
-        { name: 'TypeScript', category: 'Language', color: '#3178C6' },
-        { name: 'React', category: 'Frontend', color: '#61DAFB' },
-        { name: 'Node.js', category: 'Backend', color: '#339933' },
-        { name: 'Tailwind', category: 'Styling', color: '#38B2AC' },
-        { name: 'Git', category: 'Version Control', color: '#F05032' }
+    const techStack: TechSkill[] = [
+        { name: 'HTML5', category: 'HTML', color: '#E34F26', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg' },
+        { name: 'CSS3', category: 'CSS', color: '#1572B6', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg' },
+        { name: 'JavaScript', category: 'JavaScript', color: '#F7DF1E', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg' },
+        { name: 'TypeScript', category: 'TypeScript', color: '#3178C6', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg' },
+        { name: 'React', category: 'React', color: '#61DAFB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
+        { name: 'Node.js', category: 'Node.js', color: '#339933', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
+        { name: 'Tailwind', category: 'Tailwind', color: '#38B2AC', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+        { name: 'Git', category: 'Version Control', color: '#F05032', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg' },
+        { name: 'Next.js', category: 'Next.js', color: '#000000', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', className: 'invert' },
+        { name: 'Express.js', category: 'Express.js', color: '#000000', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg', className: 'invert' },
+        { name: 'MongoDB', category: 'MongoDB', color: '#47A248', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg' },
+        { name: 'Redis', category: 'Redis', color: '#DC382D', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg' }
     ];
 
     return (
@@ -29,13 +41,13 @@ const Skills: React.FC = () => {
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// EQUIPPED_MODULES</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// EQUIPPED_MODULES</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         TECH_STACK.DAT
                     </h2>
-                    <p className="text-sm text-gray-500 font-mono">// Loading installed technology modules...</p>
+                    <p className="text-sm text-gray-300 font-mono">// Loading installed technology modules...</p>
                 </motion.div>
 
                 {/* Primary Tech Stack - Equipped Modules */}
@@ -49,14 +61,16 @@ const Skills: React.FC = () => {
                             glowColor={`${tech.color}40`}
                             className="group"
                         >
-                            <div className="p-8 space-y-4">
-                                <div 
-                                    className="text-3xl font-cyber font-black text-white tracking-tighter group-hover:scale-105 transition-all duration-500"
-                                    style={{ textShadow: `0 0 20px ${tech.color}40` }}
-                                >
-                                    {tech.name}
+                            <div className="p-8 space-y-4 flex flex-col items-center justify-center">
+                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                    <img 
+                                        src={tech.logo} 
+                                        alt={tech.name}
+                                        className={`w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] group-hover:drop-shadow-[0_0_20px_var(--glow-color)] transition-all duration-500 ${tech.className || ''}`}
+                                        style={{ '--glow-color': tech.color } as React.CSSProperties}
+                                    />
                                 </div>
-                                <div className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-mono">{tech.category}</div>
+                                <div className="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-mono">{tech.category}</div>
                             </div>
                         </CyberPanel>
                     ))}
@@ -75,7 +89,7 @@ const Skills: React.FC = () => {
                             <span className="text-neon-yellow">▶</span>
                             AUXILIARY SYSTEMS
                         </h3>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2">
                             {['npm', 'VS Code', 'Netlify', 'Vercel', 'C Programming', 'Python', 'Vite', 'Java', 'AI Tools', 'Figma', 'Problem Solving'].map((skill, index) => (
                                 <Magnetic key={index} strength={0.1}>
                                     <motion.span
@@ -83,7 +97,7 @@ const Skills: React.FC = () => {
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: index * 0.03 }}
                                         viewport={{ once: true }}
-                                        className="px-5 py-2.5 bg-terminal-surface border border-grid-line rounded-sm text-xs text-gray-500 hover:text-neon-yellow hover:border-neon-yellow/50 transition-all font-mono uppercase tracking-wider cursor-default"
+                                        className="px-3 py-2 bg-terminal-surface border border-grid-line rounded-sm text-xs text-gray-400 hover:text-neon-yellow hover:border-neon-yellow/50 transition-all font-mono uppercase tracking-wider cursor-default min-w-[80px] text-center whitespace-nowrap"
                                     >
                                         {skill}
                                     </motion.span>

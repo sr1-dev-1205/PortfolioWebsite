@@ -29,17 +29,20 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled ? 'py-4' : 'py-6'}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled ? 'pt-0 pb-4' : 'py-6'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`relative flex items-center justify-between h-16 px-6 rounded-sm transition-all duration-700 border-b ${isScrolled ? 'bg-terminal-dark/95 backdrop-blur-2xl border-grid-glow shadow-[0_10px_40px_rgba(0,0,0,0.8)]' : 'bg-transparent border-transparent'}`}>
+                <div 
+                    className={`relative flex items-center justify-between h-16 px-6 rounded-sm transition-all duration-700 border-y ${isScrolled ? 'bg-terminal-dark/30 border-grid-glow shadow-[0_0_15px_rgba(0,240,255,0.15)]' : 'bg-transparent border-transparent'}`}
+                    style={isScrolled ? { backdropFilter: 'blur(3px)', WebkitBackdropFilter: 'blur(3px)' } : {}}
+                >
                     {/* Logo - System Identifier */}
                     <div className="flex-shrink-0 cursor-pointer group flex items-center gap-3" onClick={() => scrollToSection('home')}>
                         <div className="relative w-8 h-8 bg-gradient-to-br from-neon-cyan to-neon-blue border border-neon-cyan/50 rounded-sm flex items-center justify-center font-cyber font-black text-terminal-black text-sm transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] group-hover:scale-110">
-                            S
+                            <Code2 className="w-5 h-5" />
                         </div>
                         <div className="hidden sm:flex flex-col">
-                            <span className="text-[10px] font-cyber font-black tracking-[0.3em] uppercase text-neon-cyan">SRIDHAR</span>
-                            <span className="text-[7px] text-gray-600 font-mono uppercase tracking-[0.2em]">FRONTEND_SYS</span>
+                            <span className="text-[15px] font-cyber font-black tracking-[0.3em] uppercase text-neon-cyan">SRIDHAR-DEV</span>
+                            <span className="text-[7px] text-gray-400 font-mono uppercase tracking-[0.2em]">FullStack_SYS</span>
                         </div>
                     </div>
 
@@ -50,10 +53,10 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
                                 <Magnetic key={item} strength={0.1}>
                                     <button
                                         onClick={() => scrollToSection(item.toLowerCase())}
-                                        className={`relative px-5 py-2 text-[9px] font-mono font-bold uppercase tracking-[0.25em] transition-all duration-300 rounded-sm group ${
+                                        className={`relative px-5 py-2 text-xs font-mono font-bold uppercase tracking-[0.2em] transition-all duration-300 rounded-sm group ${
                                             activeSection === item.toLowerCase() 
                                                 ? 'text-neon-cyan' 
-                                                : 'text-gray-500 hover:text-gray-300'
+                                                : 'text-gray-400 hover:text-white'
                                         }`}
                                     >
                                         {item}

@@ -10,6 +10,7 @@ interface CommandPaletteProps {
 const CommandPalette: React.FC<CommandPaletteProps> = ({ scrollToSection }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const commands = [
         { id: 'home', icon: Home, label: 'Go to Home', section: 'home' },
@@ -24,20 +25,39 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ scrollToSection }) => {
         cmd.label.toLowerCase().includes(search.toLowerCase())
     );
 
+    // Reset selection when search changes or opens
+    useEffect(() => {
+        setSelectedIndex(0);
+    }, [search, isOpen]);
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
                 setIsOpen(prev => !prev);
             }
-            if (e.key === 'Escape') {
-                setIsOpen(false);
+            
+            if (isOpen) {
+                if (e.key === 'Escape') {
+                    setIsOpen(false);
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    setSelectedIndex(prev => (prev + 1) % filteredCommands.length);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    setSelectedIndex(prev => (prev - 1 + filteredCommands.length) % filteredCommands.length);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (filteredCommands[selectedIndex]) {
+                        handleCommand(filteredCommands[selectedIndex].section);
+                    }
+                }
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [isOpen, filteredCommands, selectedIndex]);
 
     const handleCommand = (section: string) => {
         scrollToSection(section);
@@ -84,17 +104,26 @@ const CommandPalette: React.FC<CommandPaletteProps> = ({ scrollToSection }) => {
 
                         <div className="max-h-[60vh] overflow-y-auto p-2">
                             {filteredCommands.length > 0 ? (
-                                filteredCommands.map((cmd) => (
+                                filteredCommands.map((cmd, index) => (
                                     <button
                                         key={cmd.id}
                                         onClick={() => handleCommand(cmd.section)}
-                                        className="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-colors group text-left"
+                                        onMouseEnter={() => setSelectedIndex(index)}
+                                        className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors group text-left ${
+                                            index === selectedIndex ? 'bg-white/10' : 'hover:bg-white/5'
+                                        }`}
                                     >
-                                        <div className="p-2 bg-white/5 rounded-lg group-hover:bg-accent-cyan/10 group-hover:text-accent-cyan transition-colors">
+                                        <div className={`p-2 rounded-lg transition-colors ${
+                                            index === selectedIndex ? 'bg-accent-cyan/10 text-accent-cyan' : 'bg-white/5 group-hover:bg-accent-cyan/10 group-hover:text-accent-cyan'
+                                        }`}>
                                             <cmd.icon className="w-4 h-4" />
                                         </div>
-                                        <span className="text-gray-300 group-hover:text-white font-medium">{cmd.label}</span>
-                                        <span className="ml-auto text-[10px] text-gray-600 uppercase tracking-widest group-hover:text-accent-cyan/50">Jump to</span>
+                                        <span className={`font-medium transition-colors ${
+                                            index === selectedIndex ? 'text-white' : 'text-gray-300 group-hover:text-white'
+                                        }`}>{cmd.label}</span>
+                                        <span className={`ml-auto text-[10px] uppercase tracking-widest transition-colors ${
+                                            index === selectedIndex ? 'text-accent-cyan/50' : 'text-gray-600 group-hover:text-accent-cyan/50'
+                                        }`}>Jump to</span>
                                     </button>
                                 ))
                             ) : (

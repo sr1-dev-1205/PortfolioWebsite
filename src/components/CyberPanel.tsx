@@ -24,8 +24,6 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
     alert: "#FF00AA",
   };
 
-  const cornerSize = 16;
-
   const shouldShowCorner = (position: string) => {
     if (corner === "all") return true;
     return corner === position;
@@ -61,15 +59,6 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
           />
         )}
 
-        {/* Panel Label */}
-        {label && (
-          <div className="absolute top-0 left-6 transform -translate-y-1/2 px-3 py-1 bg-terminal-black border border-grid-line rounded-sm">
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neon-cyan">
-              {label}
-            </span>
-          </div>
-        )}
-
         {/* Status Indicator */}
         <div className="absolute top-3 right-3 flex items-center gap-2">
           <motion.div
@@ -89,8 +78,8 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
           </span>
         </div>
 
-        {/* Content */}
-        <div className="relative z-10">{children}</div>
+        {/* Content - with h-full and flex-col for button alignment */}
+        <div className="relative z-10 h-full flex flex-col">{children}</div>
 
         {/* Hover Glow Effect */}
         <div
@@ -100,6 +89,15 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
           }}
         />
       </div>
+
+      {/* Panel Label - Outside overflow-hidden container to prevent clipping */}
+      {label && (
+        <div className="absolute top-0 left-6 transform -translate-y-1/2 px-3 py-1 bg-terminal-black border border-grid-line rounded-sm z-20">
+          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-neon-cyan">
+            {label}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

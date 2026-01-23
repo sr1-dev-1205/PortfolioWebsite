@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
-import Magnetic from './Magnetic';
+import SocialDock from './SocialDock';
 
 const Footer: React.FC = () => {
     return (
@@ -24,35 +23,19 @@ const Footer: React.FC = () => {
                         <div className="text-2xl font-cyber font-black tracking-tighter text-white uppercase">
                             SRIDHAR<span className="neon-text-cyan">.</span>DEV
                         </div>
-                        <p className="text-gray-600 text-[10px] font-mono max-w-xs uppercase tracking-[0.3em]">
-                            // CYBERPUNK_PORTFOLIO_v3.0.1
+                        <p className="text-gray-400 text-[10px] font-mono max-w-xs uppercase tracking-[0.3em]">
+                            //_PORTFOLIO_v3.0.1
                         </p>
                     </div>
 
                     {/* Social Links - Terminal Style */}
-                    <div className="flex gap-4">
-                        {[
-                            { Icon: Github, href: 'https://github.com/sr1-dev-1205', label: 'GIT' },
-                            { Icon: Linkedin, href: 'https://www.linkedin.com/in/sridhar1208-dev', label: 'LNK' },
-                            { Icon: Mail, href: 'mailto:sridhars200612@gmail.com', label: 'MAIL' }
-                        ].map((social, i) => (
-                            <Magnetic key={i}>
-                                <a
-                                    href={social.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-4 bg-terminal-surface border border-grid-line rounded-sm hover:border-neon-cyan transition-all group"
-                                    title={social.label}
-                                >
-                                    <social.Icon className="w-5 h-5 text-gray-600 group-hover:text-neon-cyan transition-colors" />
-                                </a>
-                            </Magnetic>
-                        ))}
+                    <div>
+                        <SocialDock />
                     </div>
                 </div>
 
                 {/* System Status Bar */}
-                <div className="pt-8 border-t border-grid-line flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] text-gray-700 font-mono uppercase tracking-[0.3em]">
+                <div className="pt-8 border-t border-grid-line flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] text-gray-400 font-mono uppercase tracking-[0.3em]">
                     <div className="flex gap-6">
                         <span className="flex items-center gap-2">
                             <span className="text-neon-green">●</span>

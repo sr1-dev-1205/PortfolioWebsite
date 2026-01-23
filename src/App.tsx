@@ -46,23 +46,46 @@ function App() {
   const [formStatus, setFormStatus] = useState('idle'); // idle | loading | success | error
 
   useEffect(() => {
+    // Optimized Scroll Listener for Back-to-Top
+    let timeoutId: NodeJS.Timeout;
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
-
-      const sections = ['home', 'about', 'skills', 'experience', 'portfolio', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      if (timeoutId) return;
+      timeoutId = setTimeout(() => {
+        setShowScrollTop(window.scrollY > 500);
+        timeoutId = undefined!;
+      }, 100);
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Optimized Intersection Observer for Active Section
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -35% 0px', // Active when section is in the middle-ish
+      threshold: 0.1
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = ['home', 'about', 'skills', 'experience', 'portfolio', 'contact'];
+    
+    sections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {

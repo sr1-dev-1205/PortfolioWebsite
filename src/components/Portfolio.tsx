@@ -2,7 +2,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import Magnetic from './Magnetic';
 import CyberPanel from './CyberPanel';
 import collegeImg from '../Assets/projects/Hitech.png';
 import aarogyaImg from '../Assets/projects/AarogyaJal.png';
@@ -46,95 +45,105 @@ const Portfolio: React.FC = () => {
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600">// OPERATIONS_ARCHIVE</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// OPERATIONS_ARCHIVE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         PROJECTS.DB
                     </h2>
-                    <p className="text-sm text-gray-500 font-mono">// Mission records and deployment archives</p>
+                    <p className="text-sm text-gray-300 font-mono">// Mission records and deployment archives</p>
                 </motion.div>
 
                 {/* Projects Grid - Operations Archive */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <CyberPanel
-                            key={project.title}
-                            label={`OPERATION_${String(index + 1).padStart(2, '0')}`}
-                            status="active"
-                            corner="all"
-                            glowColor="rgba(0, 240, 255, 0.3)"
-                            className="flex flex-col h-full group"
-                        >
-                            {/* Mission Preview Image */}
-                            <div className="relative h-64 overflow-hidden m-3 rounded-sm border border-grid-line">
-                                <img
-                                    loading="lazy"
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0 brightness-75 group-hover:brightness-100"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-terminal-black via-transparent to-transparent opacity-80"></div>
+                        <div key={project.title} className="group perspective-1000 h-[400px]">
+                            <div className="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180">
                                 
-                                {/* Scanline Effect on Hover */}
-                                <div 
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700"
-                                    style={{ 
-                                        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.1) 2px, rgba(0, 240, 255, 0.1) 4px)',
-                                    }}
-                                ></div>
-
-                                {/* Access Button Overlay */}
-                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <Magnetic strength={0.15}>
-                                        <a 
-                                            href={project.live} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            className="p-3 bg-terminal-black/80 backdrop-blur-sm border border-neon-cyan rounded-sm text-neon-cyan hover:bg-neon-cyan hover:text-terminal-black transition-all"
-                                            aria-label="Access project"
-                                        >
-                                            <ExternalLink className="w-4 h-4" />
-                                        </a>
-                                    </Magnetic>
-                                </div>
-                            </div>
-
-                            {/* Mission Details */}
-                            <div className="p-6 flex flex-col flex-grow space-y-4">
-                                <h3 className="text-xl font-cyber font-black text-white uppercase tracking-tight leading-tight">
-                                    {project.title}
-                                </h3>
-                                <p className="text-gray-500 text-sm font-sans leading-relaxed flex-grow">
-                                    {project.description}
-                                </p>
-                                
-                                {/* Tech Stack Tags */}
-                                <div className="flex flex-wrap gap-2">
-                                    {project.tech.map(t => (
-                                        <span 
-                                            key={t} 
-                                            className="px-3 py-1 bg-terminal-surface border border-grid-line rounded-sm text-[9px] text-gray-600 font-mono uppercase tracking-wider"
-                                        >
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                {/* Access Archive Button */}
-                                <Magnetic strength={0.1}>
-                                    <a
-                                        href={project.live}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-neon-cyan text-terminal-black font-cyber font-black text-[10px] uppercase tracking-[0.3em] rounded-sm hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] transition-all group/btn w-full border-2 border-neon-cyan"
+                                {/* FRONT FACE - Textual Information */}
+                                <div className="absolute w-full h-full backface-hidden transition-all duration-700 group-hover:pointer-events-none">
+                                    <CyberPanel
+                                        label={`OP_${String(index + 1).padStart(2, '0')}`}
+                                        status="active"
+                                        corner="tl"
+                                        glowColor="rgba(0, 240, 255, 0.3)"
+                                        className="h-full flex flex-col justify-between"
                                     >
-                                        [ ACCESS_ARCHIVE ]
-                                        <ExternalLink className="w-3 h-3 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                                    </a>
-                                </Magnetic>
+                                        <div className="p-8 space-y-6">
+                                            <div>
+                                                <h3 className="text-2xl font-cyber font-black text-white uppercase tracking-tight leading-tight mb-2">
+                                                    {project.title}
+                                                </h3>
+                                                <div className="h-0.5 w-12 bg-neon-cyan/50 mb-4"></div>
+                                                <p className="text-gray-300 text-sm font-sans leading-relaxed line-clamp-4">
+                                                    {project.description}
+                                                </p>
+                                            </div>
+
+                                            {/* Tech Stack */}
+                                            <div className="space-y-2">
+                                                <div className="text-[10px] text-neon-cyan font-mono uppercase tracking-widest">// TECH_STACK</div>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {project.tech.map(t => (
+                                                        <span 
+                                                            key={t} 
+                                                            className="px-2 py-1 bg-terminal-black border border-grid-line rounded-sm text-[9px] text-gray-400 font-mono uppercase tracking-wider"
+                                                        >
+                                                            {t}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-4 border-t border-grid-line bg-terminal-black/30">
+                                            <div className="text-[10px] text-gray-500 font-mono uppercase tracking-widest text-center flex items-center justify-center gap-2">
+                                                <span>HOVER TO DECRYPT</span>
+                                                <motion.span 
+                                                    animate={{ opacity: [0, 1, 0] }}
+                                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                                >_</motion.span>
+                                            </div>
+                                        </div>
+                                    </CyberPanel>
+                                </div>
+
+                                {/* BACK FACE - Image & Interactions */}
+                                <div className="absolute w-full h-full backface-hidden rotate-y-180 pointer-events-none group-hover:pointer-events-auto">
+                                    <CyberPanel
+                                        label="ACCESS_GRANTED"
+                                        status="active"
+                                        corner="br"
+                                        glowColor="rgba(0, 240, 255, 0.3)"
+                                        className="h-full overflow-hidden relative group/image"
+                                    >
+                                        {/* Full Image Background */}
+                                        <div className="absolute inset-0">
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover opacity-80 group-hover/image:opacity-60 transition-opacity duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-terminal-black/40"></div>
+                                        </div>
+
+                                        {/* Overlay Content */}
+                                        <div className="relative h-full flex flex-col items-center justify-end pb-12 p-6">
+                                            <a 
+                                                href={project.live} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="px-8 py-3 bg-neon-cyan text-terminal-black font-cyber font-bold uppercase tracking-[0.2em] rounded-sm hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all flex items-center gap-2 transform hover:scale-105 cursor-pointer z-50"
+                                                style={{ transform: 'translateZ(30px)' }}
+                                            >
+                                                <span>View Live</span>
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    </CyberPanel>
+                                </div>
                             </div>
-                        </CyberPanel>
+                        </div>
                     ))}
                 </div>
             </div>
