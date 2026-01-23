@@ -1,6 +1,9 @@
 import React from 'react';
 import { Download, Github, Linkedin, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import Magnetic from './Magnetic';
+import RevealText from './RevealText';
+import CyberPanel from './CyberPanel';
 
 interface HeroProps {
     scrollToSection: (sectionId: string) => void;
@@ -9,129 +12,244 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
+    const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        x.set((e.clientX - rect.left) / rect.width - 0.5);
+        y.set((e.clientY - rect.top) / rect.height - 0.5);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
     return (
-        <section id="home" className="min-h-screen flex items-center justify-center relative md:overflow-hidden pt-16">
+        <section id="home" className="min-h-screen flex items-center justify-center relative md:overflow-hidden pt-32 pb-20">
+            {/* System Boot Messages */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="absolute top-28 left-8 z-10 hidden lg:block"
+            >
+                <div className="font-mono text-[9px] text-neon-cyan space-y-1 opacity-50">
+                    <div className="flex items-center gap-2">
+                        <span className="text-neon-green">●</span>
+                        <span>[SYS] Portfolio_v3.0.1 ONLINE</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-neon-green">●</span>
+                        <span>[STATUS] OPERATIONAL</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="text-neon-cyan">●</span>
+                        <span>[UPTIME] 99.97%</span>
+                    </div>
+                </div>
+            </motion.div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
-                    {/* Text Content */}
+                    {/* Left: Identity Module */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="text-center md:text-left space-y-8 relative z-20 order-last md:order-none"
                     >
-                        <div className="inline-block relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                            <span className="relative px-4 py-2 bg-black rounded-full border border-accent-cyan/30 text-accent-cyan text-sm font-medium tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
-                                Welcome to my portfolio
+                        {/* Status Badge */}
+                        <div className="inline-flex items-center gap-3 px-6 py-3 bg-terminal-surface border border-grid-glow rounded-sm backdrop-blur-md">
+                            <motion.div
+                                className="w-2 h-2 rounded-full bg-neon-green"
+                                animate={{
+                                    opacity: [0.3, 1, 0.3],
+                                    scale: [0.8, 1.2, 0.8],
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                }}
+                            />
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-green">
+                                STATUS: AVAILABLE
                             </span>
                         </div>
 
-                        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                            <span className="block text-gray-300 text-2xl sm:text-3xl mb-4 font-light tracking-wide">Hi, I'm</span>
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-accent-cyan to-accent-blue animate-gradient bg-300% drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                                Sridhar
-                            </span>
+                        {/* Main Identity */}
+                        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-cyber font-black leading-[0.85] tracking-tighter">
+                            <motion.span 
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 0.3, x: 0 }}
+                                transition={{ duration: 1, delay: 0.5 }}
+                                className="block text-gray-600 text-sm sm:text-base mb-6 font-mono font-medium tracking-[0.3em] uppercase"
+                            >
+                                &gt; ENGINEER_ID: 0x7FE4
+                            </motion.span>
+                            <div className="neon-text-cyan mb-4">
+                                SRIDHAR
+                            </div>
                         </h1>
 
-                        <div className="space-y-4">
-                            <p className="text-xl sm:text-2xl text-gray-300 font-light flex items-center justify-center md:justify-start gap-3">
-                                <span className="text-accent-cyan">&lt;</span>
-                                Frontend Developer
-                                <span className="text-accent-cyan">/&gt;</span>
-                                <span className="text-sm text-gray-500">|</span>
-                                <span className="text-accent-purple">MERN Stack Learner</span>
-                            </p>
-
-                            <div className="text-accent-cyan/80 text-sm tracking-[0.2em] uppercase font-semibold">
-                                Learning • Building • Growing
-                            </div>
+                        {/* Role Classification */}
+                        <div className="space-y-3">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                className="font-mono text-sm sm:text-base text-gray-300 uppercase tracking-[0.15em]"
+                            >
+                                <span className="text-neon-cyan">[</span> FRONTEND ENGINEER <span className="text-neon-cyan">]</span>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1 }}
+                                className="font-mono text-[10px] text-gray-600 uppercase tracking-[0.25em]"
+                            >
+                                SPEC: REACT • TYPESCRIPT • MERN STACK
+                            </motion.div>
                         </div>
 
-                        <p className="text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed text-lg backdrop-blur-sm bg-black/20 p-4 rounded-xl border-l-2 border-accent-cyan/50">
-                            Frontend-focused developer building clean, responsive, and user-friendly web interfaces
-                            using modern technologies. Currently expanding my skills toward the MERN stack.
+                        <p className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto md:mx-0 font-sans border-l-2 border-grid-line pl-4">
+                            "Crafting high-performance digital architectures with a focus on human-centric design and pixel-perfect execution."
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start pt-6">
-                            <button
-                                onClick={() => scrollToSection('contact')}
-                                className="group relative px-8 py-4 bg-transparent border border-accent-cyan/50 text-accent-cyan font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:border-accent-cyan flex items-center justify-center"
-                            >
-                                <div className="absolute inset-0 w-0 bg-accent-cyan transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
-                                <span className="relative flex items-center gap-2">Contact Me</span>
-                            </button>
+                        {/* Action Triggers */}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-8">
+                            <Magnetic strength={0.15}>
+                                <button
+                                    onClick={() => scrollToSection('contact')}
+                                    className="group relative px-10 py-5 bg-neon-cyan text-terminal-black font-cyber font-black rounded-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] flex items-center justify-center border-2 border-neon-cyan uppercase tracking-[0.25em] text-[10px]"
+                                >
+                                    <span className="relative z-10">[ INITIATE_CONTACT ]</span>
+                                </button>
+                            </Magnetic>
 
-                            <a
-                                href={resumePdf}
-                                download
-                                className="group px-8 py-4 bg-white/5 border border-white/10 rounded-full font-semibold hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md hover:border-white/30"
-                            >
-                                <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-                                <span>Download Resume</span>
-                            </a>
+                            <Magnetic strength={0.15}>
+                                <a
+                                    href={resumePdf}
+                                    download
+                                    className="group px-10 py-5 bg-transparent border-2 border-grid-glow rounded-sm font-cyber font-black hover:border-neon-cyan hover:bg-terminal-surface transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md uppercase tracking-[0.25em] text-[10px] text-gray-400 hover:text-neon-cyan"
+                                >
+                                    <Download className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
+                                    <span>DOWNLOAD.CV</span>
+                                </a>
+                            </Magnetic>
                         </div>
 
-                        {/* Social Links */}
-                        <div className="flex gap-6 justify-center md:justify-start pt-6">
+                        {/* Social Links - Terminal Style */}
+                        <div className="flex gap-3 justify-center md:justify-start pt-6">
                             {[
-                                { Icon: Github, color: 'text-white hover:text-accent-cyan', href: 'https://github.com/sr1-dev-1205' },
-                                { Icon: Linkedin, color: 'text-white hover:text-accent-blue', href: 'https://www.linkedin.com/in/sridhar1208-dev' },
-                                { Icon: Mail, color: 'text-white hover:text-accent-purple', href: 'mailto:sridhars200612@gmail.com' }
-                            ].map(({ Icon, color, href }, index) => (
-                                <a
-                                    key={index}
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`relative p-3 bg-white/5 rounded-xl border border-white/10 transition-all duration-300 hover:scale-110 hover:border-white/30 group ${color}`}
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <Icon className="w-6 h-6 relative z-10" />
-                                </a>
+                                { Icon: Github, href: 'https://github.com/sr1-dev-1205', label: 'GIT' },
+                                { Icon: Linkedin, href: 'https://www.linkedin.com/in/sridhar1208-dev', label: 'LNK' },
+                                { Icon: Mail, href: 'mailto:sridhars200612@gmail.com', label: 'MAIL' }
+                            ].map(({ Icon, href, label }, index) => (
+                                <Magnetic key={index}>
+                                    <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group relative p-3 bg-terminal-surface border border-grid-line rounded-sm transition-all duration-300 hover:border-neon-cyan"
+                                        title={label}
+                                    >
+                                        <Icon className="w-5 h-5 text-gray-500 group-hover:text-neon-cyan transition-colors" />
+                                        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-[8px] font-mono text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest">{label}</span>
+                                    </a>
+                                </Magnetic>
                             ))}
                         </div>
                     </motion.div>
 
-                    {/* Image/Visual Content */}
+                    {/* Right: Profile HUD Terminal */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                        className="relative flex justify-center perspective-1000 z-10 order-first md:order-none mt-8 md:mt-0"
+                        className="relative flex justify-center z-10 order-first md:order-none mt-8 md:mt-0"
                     >
-                        {/* Orbiting Elements - Subtler decorative background instead of full planet */}
-                        <div className="absolute w-full md:w-[120%] h-full md:h-[120%] border border-accent-cyan/10 rounded-full animate-spin-slow pointer-events-none"></div>
-                        <div className="absolute w-[90%] h-[90%] border border-accent-purple/10 rounded-full animate-spin pointer-events-none" style={{ animationDuration: '25s', animationDirection: 'reverse' }}></div>
+                        <CyberPanel
+                            label="IMG_SCANNER"
+                            status="active"
+                            corner="all"
+                            glowColor="rgba(0, 240, 255, 0.5)"
+                            className="w-full max-w-[18rem] sm:max-w-none sm:w-96"
+                        >
+                            <div
+                                className="relative aspect-square p-4"
+                                onMouseMove={handleMouseMove}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                {/* Image Container with 3D Transform */}
+                                <motion.div
+                                    style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                                    className="relative w-full h-full"
+                                >
+                                    {/* Profile Image */}
+                                    <div className="relative w-full h-full rounded-sm overflow-hidden border-2 border-grid-glow shadow-[0_0_30px_rgba(0,240,255,0.2)]">
+                                        <img
+                                            loading="eager"
+                                            // @ts-ignore
+                                            fetchpriority="high"
+                                            src={profileImg}
+                                            alt="Sridhar Profile - Engineer"
+                                            className="w-full h-full object-cover object-center transition-all duration-700 grayscale group-hover:grayscale-0 brightness-90 group-hover:brightness-100"
+                                        />
+                                        
+                                        {/* Terminal Overlay Grid */}
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-terminal-black/80 z-10"></div>
+                                        
+                                        {/* Scanlines */}
+                                        <div 
+                                            className="absolute inset-0 z-20 pointer-events-none opacity-30"
+                                            style={{ 
+                                                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.1) 2px, rgba(0, 240, 255, 0.1) 4px)',
+                                            }}
+                                        ></div>
 
-                        <div className="relative group w-full max-w-[18rem] sm:max-w-none sm:w-96 aspect-square mx-auto overflow-visible">
-                            <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan to-accent-purple rounded-full blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity duration-500 animate-pulse-slow"></div>
+                                        {/* Scanning Line */}
+                                        <motion.div
+                                            className="absolute left-0 w-full h-1 bg-neon-cyan shadow-[0_0_20px_rgba(0,240,255,0.8)] z-30"
+                                            animate={{
+                                                top: ['0%', '100%'],
+                                            }}
+                                            transition={{
+                                                duration: 3,
+                                                repeat: Infinity,
+                                                ease: "linear",
+                                            }}
+                                        />
 
-                            {/* Profile Image Container */}
-                            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/10 group-hover:border-accent-cyan/50 transition-all duration-500 transform group-hover:scale-105 shadow-2xl bg-space-900 aspect-square isolate transform-gpu">
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-space-900/40 z-10"></div>
-                                <img
-                                    loading="eager"
-                                    // @ts-ignore
-                                    fetchpriority="high"
-                                    src={profileImg}
-                                    alt="Sridhar Profile"
-                                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                                />
+                                        {/* Corner Indicators */}
+                                        <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-neon-cyan z-30"></div>
+                                        <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-neon-cyan z-30"></div>
+                                        <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-neon-cyan z-30"></div>
+                                        <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-neon-cyan z-30"></div>
+                                    </div>
+
+                                    {/* Terminal Data Overlay */}
+                                    <div className="absolute bottom-4 left-4 right-4 z-40 space-y-1">
+                                        <div className="font-mono text-[8px] text-neon-cyan flex items-center justify-between bg-terminal-black/80 px-2 py-1 rounded-sm border border-grid-line">
+                                            <span>ID: 0x7FE4</span>
+                                            <span className="text-neon-green">● VERIFIED</span>
+                                        </div>
+                                        <div className="font-mono text-[7px] text-gray-500 flex items-center justify-between bg-terminal-black/80 px-2 py-1 rounded-sm border border-grid-line">
+                                            <span>STATUS: AVAILABLE</span>
+                                            <span>LOC: IN</span>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
-
-                            {/* Floating Badge */}
-                            <div className="absolute -bottom-0 -right-0 glass-card px-6 py-3 rounded-full animate-float-medium z-20 border border-accent-cyan/20">
-                                <div className="flex items-center gap-3">
-                                    <span className="relative flex h-3 w-3">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                                    </span>
-                                    <span className="text-sm font-semibold text-white tracking-wide">Open to Work</span>
-                                </div>
-                            </div>
-                        </div>
+                        </CyberPanel>
                     </motion.div>
                 </div>
             </div>
