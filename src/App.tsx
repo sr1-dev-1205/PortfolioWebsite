@@ -45,44 +45,39 @@ function App() {
   const [formStatus, setFormStatus] = useState('idle'); // idle | loading | success | error
 
   useEffect(() => {
-    // Optimized Scroll Listener for Back-to-Top
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout | undefined;
+
     const handleScroll = () => {
       if (timeoutId) return;
       timeoutId = setTimeout(() => {
         setShowScrollTop(window.scrollY > 500);
+        
+        // Update active section based on scroll position
+        const sections = ['home', 'about', 'skills', 'experience', 'portfolio', 'contact'];
+        const scrollPosition = window.scrollY + 200; // Offset for better detection
+        
+        let currentSection = 'home';
+        
+        for (const sectionId of sections) {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            const { offsetTop } = element;
+            if (scrollPosition >= offsetTop) {
+              currentSection = sectionId;
+            }
+          }
+        }
+        
+        setActiveSection(currentSection);
         timeoutId = undefined!;
-      }, 100);
+      }, 50); // Reduced debounce time for faster updates
     };
 
     window.addEventListener('scroll', handleScroll);
-
-    // Optimized Intersection Observer for Active Section
-    const observerOptions = {
-      root: null,
-      rootMargin: '-50% 0px -50% 0px', // Active when section crosses the center line
-      threshold: 0
-    };
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const sections = ['home', 'about', 'skills', 'experience', 'portfolio', 'contact'];
-    
-    sections.forEach(id => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+    handleScroll(); // Initial call
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);

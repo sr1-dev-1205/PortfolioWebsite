@@ -28,7 +28,7 @@ const About: React.FC = () => {
     ];
 
     return (
-        <section id="about" className="py-20 relative overflow-hidden">
+        <section id="about" className="py-20 md:py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Terminal Section Header */}
                 <motion.div
@@ -36,17 +36,17 @@ const About: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-12 md:mb-20"
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-xs uppercase tracking-[0.3em] text-gray-400">// SYSTEM_MODULE</span>
+                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-gray-400">// SYSTEM_MODULE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         PROFILE.SYS
                     </h2>
-                    <p className="text-base text-gray-400 font-mono">// Engineer identity and core parameters loaded</p>
+                    <p className="text-sm sm:text-base text-gray-400 font-mono">// Engineer identity and core parameters loaded</p>
                 </motion.div>
 
                 <div className="flex flex-col lg:flex-row gap-12 items-start">
@@ -80,7 +80,7 @@ const About: React.FC = () => {
                         </div>
 
                         {/* Stats Grid - Data Modules */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4">
                             {stats.map((stat, index) => (
                                 <CyberPanel
                                     key={index}
@@ -88,10 +88,10 @@ const About: React.FC = () => {
                                     corner="tl"
                                     className="group"
                                 >
-                                    <div className="p-6 space-y-3">
+                                    <div className="p-4 sm:p-6 space-y-3">
                                         <stat.icon className="w-5 h-5 text-neon-cyan group-hover:scale-110 transition-transform duration-500" />
-                                        <div className="text-xl md:text-2xl font-cyber font-black text-white break-words">{stat.value}</div>
-                                        <div className="text-[10px] text-gray-400 uppercase tracking-[0.25em] font-mono">{stat.label}</div>
+                                        <div className="text-lg sm:text-xl md:text-2xl font-cyber font-black text-white">{stat.value}</div>
+                                        <div className="text-[9px] text-gray-400 uppercase tracking-tight font-mono">{stat.label}</div>
                                     </div>
                                 </CyberPanel>
                             ))}

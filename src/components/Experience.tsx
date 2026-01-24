@@ -27,7 +27,7 @@ const Experience: React.FC = () => {
     ];
 
     return (
-        <section id="experience" className="py-24 relative overflow-hidden">
+        <section id="experience" className="py-20 md:py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 {/* Terminal Section Header */}
                 <motion.div
@@ -35,24 +35,24 @@ const Experience: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-20"
+                    className="text-center mb-12 md:mb-20"
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// CAREER_TIMELINE</span>
+                        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-gray-400">// CAREER_TIMELINE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
-                        EXPERIENCE_LOG.DAT
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
+                        EXPERIENCE_LOG
                     </h2>
-                    <p className="text-sm text-gray-300 font-mono">// System capability progression records</p>
+                    <p className="text-xs sm:text-sm text-gray-300 font-mono">// System capability progression records</p>
                 </motion.div>
 
                 <div className="relative">
                     {/* Central Vertical Line - Neon */}
                     <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-neon-cyan via-neon-magenta to-transparent hidden md:block opacity-20 shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
 
-                    <div className="space-y-24">
+                    <div className="space-y-16 md:space-y-24">
                         {experiences.map((exp, index) => (
                             <motion.div
                                 key={index}
@@ -71,7 +71,7 @@ const Experience: React.FC = () => {
                                         glowColor={`${exp.color}40`}
                                         className="group"
                                     >
-                                        <div className="p-8 space-y-6">
+                                        <div className="p-6 sm:p-8 space-y-6">
                                             <div className="flex items-center gap-4">
                                                 <div 
                                                     className="p-4 bg-terminal-black rounded-sm border-2 group-hover:scale-110 transition-transform duration-500"
@@ -81,7 +81,7 @@ const Experience: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     <h3 className="text-2xl font-cyber font-black text-white uppercase tracking-tight">{exp.title}</h3>
-                                                    <div className="text-neon-cyan font-mono text-[9px] uppercase tracking-[0.3em] mt-1">{exp.company}</div>
+                                                    <div className="text-neon-cyan font-mono text-[9px] uppercase tracking-wide mt-1">{exp.company}</div>
                                                 </div>
                                             </div>
                                             

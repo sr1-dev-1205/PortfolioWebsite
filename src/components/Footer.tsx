@@ -17,13 +17,13 @@ const Footer: React.FC = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pb-12">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 pb-8 md:pb-12">
                     {/* Brand Identity */}
-                    <div className="space-y-4 text-center md:text-left">
-                        <div className="text-2xl font-cyber font-black tracking-tighter text-white uppercase">
+                    <div className="space-y-3 sm:space-y-4 text-center md:text-left">
+                        <div className="text-xl sm:text-2xl font-cyber font-black tracking-tighter text-white uppercase">
                             SRIDHAR<span className="neon-text-cyan">.</span>DEV
                         </div>
-                        <p className="text-gray-400 text-[10px] font-mono max-w-xs uppercase tracking-[0.3em]">
+                        <p className="text-gray-400 text-[9px] sm:text-[10px] font-mono max-w-xs uppercase tracking-[0.3em]">
                             //_PORTFOLIO_v3.0.1
                         </p>
                     </div>
@@ -35,15 +35,15 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* System Status Bar */}
-                <div className="pt-8 border-t border-grid-line flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] text-gray-400 font-mono uppercase tracking-[0.3em]">
-                    <div className="flex gap-6">
+                <div className="pt-6 sm:pt-8 border-t border-grid-line flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-[8px] sm:text-[9px] text-gray-400 font-mono uppercase tracking-[0.3em]">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                         <span className="flex items-center gap-2">
                             <span className="text-neon-green">●</span>
                             [SYS] ONLINE
                         </span>
                         <span>© 2026 SRIDHAR</span>
                     </div>
-                    <div className="flex gap-6">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                         <span>MADE_IN: INDIA</span>
                         <span>REACH: WORLDWIDE</span>
                     </div>

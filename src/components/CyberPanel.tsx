@@ -8,6 +8,7 @@ interface CyberPanelProps {
   glowColor?: string;
   label?: string;
   status?: "active" | "standby" | "alert";
+  statusClassName?: string;
 }
 
 const CyberPanel: React.FC<CyberPanelProps> = ({
@@ -17,6 +18,7 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
   glowColor = "rgba(0, 240, 255, 0.4)",
   label,
   status = "standby",
+  statusClassName = "",
 }) => {
   const statusColors = {
     active: "#39FF14",
@@ -59,26 +61,7 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
           />
         )}
 
-        {/* Status Indicator */}
-        <div className="absolute top-3 right-3 flex items-center gap-2">
-          <motion.div
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: statusColors[status] }}
-            animate={{
-              opacity: [0.4, 1, 0.4],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <span className="font-mono text-[8px] uppercase tracking-widest text-gray-600">
-            {status}
-          </span>
-        </div>
-
-        {/* Content - with h-full and flex-col for button alignment */}
+      {/* Content - with h-full and flex-col for button alignment */}
         <div className="relative z-10 h-full flex flex-col">{children}</div>
 
         {/* Hover Glow Effect */}
@@ -88,6 +71,25 @@ const CyberPanel: React.FC<CyberPanelProps> = ({
             background: `radial-gradient(circle at 50% 50%, ${glowColor} 0%, transparent 70%)`,
           }}
         />
+      </div>
+
+      {/* Status Indicator - Outside overflow container for visibility */}
+      <div className={`absolute -top-3 right-3 flex items-center gap-2 px-2 py-1 bg-terminal-black/90 backdrop-blur-sm border border-grid-line rounded-sm ${statusClassName}`}>
+        <motion.div
+          className="w-2 h-2 rounded-full"
+          style={{ backgroundColor: statusColors[status] }}
+          animate={{
+            opacity: [0.4, 1, 0.4],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <span className="font-mono text-[8px] uppercase tracking-widest text-gray-400">
+          {status}
+        </span>
       </div>
 
       {/* Panel Label - Outside overflow-hidden container to prevent clipping */}

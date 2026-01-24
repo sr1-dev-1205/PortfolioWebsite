@@ -33,7 +33,7 @@ const Portfolio: React.FC = () => {
     ];
 
     return (
-        <section id="portfolio" className="py-24 relative overflow-hidden">
+        <section id="portfolio" className="py-20 md:py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 {/* Terminal Section Header */}
                 <motion.div
@@ -41,21 +41,21 @@ const Portfolio: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-20"
+                    className="text-center mb-12 md:mb-20"
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// OPERATIONS_ARCHIVE</span>
+                        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-gray-400">// OPERATIONS_ARCHIVE</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         PROJECTS.DB
                     </h2>
-                    <p className="text-sm text-gray-300 font-mono">// Mission records and deployment archives</p>
+                    <p className="text-xs sm:text-sm text-gray-300 font-mono">// Mission records and deployment archives</p>
                 </motion.div>
 
                 {/* Projects Grid - Operations Archive */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     {projects.map((project, index) => (
                         <div key={project.title} className="group perspective-1000 h-[400px]">
                             <div className="relative w-full h-full duration-700 transform-style-3d group-hover:rotate-y-180">
@@ -69,7 +69,7 @@ const Portfolio: React.FC = () => {
                                         glowColor="rgba(0, 240, 255, 0.3)"
                                         className="h-full flex flex-col justify-between"
                                     >
-                                        <div className="p-8 space-y-6">
+                                        <div className="p-6 sm:p-8 space-y-6">
                                             <div>
                                                 <h3 className="text-2xl font-cyber font-black text-white uppercase tracking-tight leading-tight mb-2">
                                                     {project.title}
