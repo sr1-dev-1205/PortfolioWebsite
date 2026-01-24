@@ -4,48 +4,37 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import Magnetic from './Magnetic';
 import CyberPanel from './CyberPanel';
 import SocialDock from './SocialDock';
-
 interface HeroProps {
     scrollToSection: (sectionId: string) => void;
     resumePdf: string;
     profileImg: string;
 }
-
 const roles = ["FULLSTACK DEVELOPER", "AI ENGINEER"];
-
 const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) => {
     const [roleIndex, setRoleIndex] = useState(0);
-
     useEffect(() => {
         const interval = setInterval(() => {
             setRoleIndex((prev) => (prev + 1) % roles.length);
         }, 3000);
         return () => clearInterval(interval);
     }, []);
-
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-
     const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
     const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30 });
-
     const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
     const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
     const handleMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect();
         x.set((e.clientX - rect.left) / rect.width - 0.5);
         y.set((e.clientY - rect.top) / rect.height - 0.5);
     };
-
     const handleMouseLeave = () => {
         x.set(0);
         y.set(0);
     };
-
     return (
-        <section id="home" className="min-h-screen flex items-center justify-center relative md:overflow-hidden pt-32 pb-20">
-            {/* System Boot Messages */}
+        <section id="home" className="min-h-screen flex items-center justify-center relative md:overflow-hidden pt-24 pb-12 md:pt-32 md:pb-20">
             {/* System Boot Messages */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -68,25 +57,22 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                     </div>
                 </div>
             </motion.div>
-
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 lg:gap-12 items-center">
                     {/* Left: Identity Module */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-center md:text-left space-y-8 relative z-20 order-last md:order-none"
+                        className="text-center md:text-left space-y-6 md:space-y-8 relative z-20 order-last md:order-none"
                     >
-
-
                         {/* Main Identity */}
-                        <h1 className="text-5xl sm:text-7xl lg:text-7xl font-cyber font-black leading-[0.85] tracking-tighter">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-cyber font-black leading-[0.85] tracking-tighter">
                             <motion.span 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 0.8, x: 0 }}
                                 transition={{ duration: 1, delay: 0.5 }}
-                                className="block text-gray-400 text-sm sm:text-base mb-6 font-mono font-medium tracking-[0.3em] uppercase"
+                                className="block text-gray-400 text-xs sm:text-sm md:text-base mb-4 md:mb-6 font-mono font-medium tracking-[0.3em] uppercase"
                             >
                                 &gt; ENGINEER_ID: 0x7FE4
                             </motion.span>
@@ -97,17 +83,16 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                 SRIDHAR
                             </div>
                         </h1>
-
                         {/* Role Classification */}
                         <div className="space-y-3">
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.8 }}
-                                className="font-mono text-sm sm:text-base text-gray-300 uppercase tracking-[0.15em] h-8 relative overflow-hidden flex items-center"
+                                className="font-mono text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-[0.15em] h-8 relative overflow-hidden flex items-center justify-center md:justify-start"
                             >
                                 <span className="text-neon-cyan mr-2">[</span>
-                                <div className="w-[280px] sm:w-[350px] relative h-full flex items-center justify-center">
+                                <div className="w-[240px] sm:w-[280px] md:w-[350px] relative h-full flex items-center justify-center">
                                     <AnimatePresence mode="wait">
                                         <motion.span
                                             key={roles[roleIndex]}
@@ -115,7 +100,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                             animate={{ y: 0, opacity: 1 }}
                                             exit={{ y: -20, opacity: 0 }}
                                             transition={{ duration: 0.5, ease: "easeOut" }}
-                                            className="absolute whitespace-nowrap"
+                                            className="absolute whitespace-nowrap text-xs sm:text-sm md:text-base"
                                         >
                                             {roles[roleIndex]}
                                         </motion.span>
@@ -127,18 +112,17 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1 }}
-                                className="font-mono text-[10px] text-gray-400 uppercase tracking-[0.25em]"
+                                className="font-mono text-[8px] sm:text-[9px] md:text-[10px] text-gray-400 uppercase tracking-[0.25em]"
                             >
                                 SPEC: REACT • TYPESCRIPT • MERN STACK
                             </motion.div>
                         </div>
-
-                        {/* Status Badge - Moved Down */}
+                        {/* Status Badge */}
                         <motion.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.2 }}
-                            className="inline-flex items-center gap-3 px-4 py-2 bg-terminal-surface border border-grid-glow rounded-sm backdrop-blur-md"
+                            className="inline-flex items-center gap-3 px-3 py-1.5 sm:px-4 sm:py-2 bg-terminal-surface border border-grid-glow rounded-sm backdrop-blur-md"
                         >
                             <motion.div
                                 className="w-2 h-2 rounded-full bg-neon-green"
@@ -152,60 +136,55 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                     ease: "easeInOut",
                                 }}
                             />
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neon-green">
+                            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-neon-green">
                                 STATUS: AVAILABLE
                             </span>
                         </motion.div>
-
                         <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0 font-sans border-l-2 border-grid-line pl-4">
                             "Crafting high-performance digital architectures with a focus on human-centric design and pixel-perfect execution."
                         </p>
-
-                        {/* Action Triggers */}
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-8">
+                        {/* Action Triggers - Full width on mobile, row on desktop */}
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start pt-6 md:pt-8">
                             <Magnetic strength={0.15}>
                                 <button
                                     onClick={() => scrollToSection('contact')}
-                                    className="group relative px-10 py-5 bg-neon-cyan text-terminal-black font-cyber font-black rounded-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] flex items-center justify-center border-2 border-neon-cyan uppercase tracking-[0.25em] text-[10px]"
+                                    className="group relative w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-neon-cyan text-terminal-black font-cyber font-black rounded-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] flex items-center justify-center border-2 border-neon-cyan uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[9px] sm:text-[10px]"
                                 >
-                                    <span className="relative z-10">[ INITIATE_CONTACT ]</span>
+                                    <span className="relative z-10">INITIATE_CONTACT</span>
                                 </button>
                             </Magnetic>
-
                             <Magnetic strength={0.15}>
                                 <a
                                     href={resumePdf}
                                     download
-                                    className="group px-10 py-5 bg-transparent border-2 border-grid-glow rounded-sm font-cyber font-black hover:border-neon-cyan hover:bg-terminal-surface transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md uppercase tracking-[0.25em] text-[10px] text-gray-400 hover:text-neon-cyan"
+                                    className="group w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-transparent border-2 border-grid-glow rounded-sm font-cyber font-black hover:border-neon-cyan hover:bg-terminal-surface transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[9px] sm:text-[10px] text-gray-400 hover:text-neon-cyan"
                                 >
                                     <Download className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
                                     <span>DOWNLOAD.CV</span>
                                 </a>
                             </Magnetic>
                         </div>
-
-                        {/* Social Links - Terminal Style */}
-                        <div className="flex gap-3 justify-center md:justify-start pt-6">
+                        {/* Social Links */}
+                        <div className="flex gap-3 justify-center md:justify-start pt-4 md:pt-6">
                             <SocialDock />
                         </div>
                     </motion.div>
-
                     {/* Right: Profile HUD Terminal */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                        className="relative flex justify-center z-10 order-first md:order-none mt-8 md:mt-0"
+                        className="relative flex justify-center z-10 order-first md:order-none"
                     >
                         <CyberPanel
                             label="IMG_SCANNER"
                             status="active"
                             corner="all"
                             glowColor="rgba(0, 240, 255, 0.5)"
-                            className="w-full max-w-[20rem] sm:max-w-none sm:w-[22rem] md:w-[24rem]"
+                            className="w-full max-w-[280px] sm:max-w-[320px] md:w-[24rem]"
                         >
                             <div
-                                className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] p-4"
+                                className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] p-3 sm:p-4 mx-auto"
                                 onMouseMove={handleMouseMove}
                                 onMouseLeave={handleMouseLeave}
                             >
@@ -258,7 +237,6 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                             className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-neon-cyan z-30"
                                         ></motion.div>
                                     </div>
-
                                     {/* Terminal Data Overlay */}
                                     <div className="absolute bottom-4 left-4 right-4 z-40 space-y-1">
                                         <div className="font-mono text-[8px] text-neon-cyan flex items-center justify-between bg-terminal-black/80 px-2 py-1 rounded-sm border border-grid-line">
@@ -276,7 +254,6 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                     </motion.div>
                 </div>
             </div>
-
             {/* Scroll Down Indicator */}
             <motion.div
                 initial={{ opacity: 0 }}
@@ -296,5 +273,4 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
         </section>
     );
 };
-
 export default Hero;

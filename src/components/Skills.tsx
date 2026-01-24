@@ -29,7 +29,7 @@ const Skills: React.FC = () => {
     ];
 
     return (
-        <section id="skills" className="py-24 relative overflow-hidden">
+        <section id="skills" className="py-20 md:py-32 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                 {/* Terminal Section Header */}
                 <motion.div
@@ -37,32 +37,33 @@ const Skills: React.FC = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="text-center mb-12 md:mb-20"
                 >
                     <div className="inline-flex items-center gap-3 mb-6">
                         <div className="h-px w-8 bg-gradient-to-r from-transparent to-neon-cyan"></div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400">// EQUIPPED_MODULES</span>
+                        <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-gray-400">// EQUIPPED_MODULES</span>
                         <div className="h-px w-8 bg-gradient-to-l from-transparent to-neon-cyan"></div>
                     </div>
-                    <h2 className="text-4xl sm:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-cyber font-black uppercase tracking-tighter neon-text-cyan mb-4">
                         TECH_STACK.DAT
                     </h2>
-                    <p className="text-sm text-gray-300 font-mono">// Loading installed technology modules...</p>
+                    <p className="text-xs sm:text-sm text-gray-300 font-mono">// Loading installed technology modules...</p>
                 </motion.div>
 
                 {/* Primary Tech Stack - Equipped Modules */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 mb-12 md:mb-16">
                     {techStack.map((tech, index) => (
                         <CyberPanel
                             key={tech.name}
                             label={`MOD_${index + 1}`}
                             status="active"
+                            statusClassName="hidden sm:block"
                             corner="tl"
                             glowColor={`${tech.color}40`}
                             className="group"
                         >
-                            <div className="p-8 space-y-4 flex flex-col items-center justify-center">
-                                <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                            <div className="p-3 sm:p-6 md:p-8 space-y-3 sm:space-y-4 flex flex-col items-center justify-center">
+                                <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
                                     <img 
                                         src={tech.logo} 
                                         alt={tech.name}
@@ -70,7 +71,7 @@ const Skills: React.FC = () => {
                                         style={{ '--glow-color': tech.color } as React.CSSProperties}
                                     />
                                 </div>
-                                <div className="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-mono">{tech.category}</div>
+                                <div className="text-[8px] sm:text-[9px] text-gray-400 uppercase tracking-wider font-mono">{tech.category}</div>
                             </div>
                         </CyberPanel>
                     ))}
@@ -84,12 +85,12 @@ const Skills: React.FC = () => {
                     glowColor="rgba(255, 234, 0, 0.2)"
                     className="mt-12"
                 >
-                    <div className="p-8">
-                        <h3 className="text-lg font-cyber font-black text-white uppercase tracking-wider mb-6 flex items-center gap-3">
+                    <div className="p-5 sm:p-6 md:p-8">
+                        <h3 className="text-base sm:text-lg font-cyber font-black text-white uppercase tracking-wider mb-4 sm:mb-6 flex items-center gap-3">
                             <span className="text-neon-yellow">▶</span>
                             AUXILIARY SYSTEMS
                         </h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 sm:gap-2.5">
                             {['npm', 'VS Code', 'Netlify', 'Vercel', 'C Programming', 'Python', 'Vite', 'Java', 'AI Tools', 'Figma', 'Problem Solving'].map((skill, index) => (
                                 <Magnetic key={index} strength={0.1}>
                                     <motion.span
@@ -97,7 +98,7 @@ const Skills: React.FC = () => {
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: index * 0.03 }}
                                         viewport={{ once: true }}
-                                        className="px-3 py-2 bg-terminal-surface border border-grid-line rounded-sm text-xs text-gray-400 hover:text-neon-yellow hover:border-neon-yellow/50 transition-all font-mono uppercase tracking-wider cursor-default min-w-[80px] text-center whitespace-nowrap"
+                                        className="px-2.5 py-1.5 sm:px-3 sm:py-2 bg-terminal-surface border border-grid-line rounded-sm text-[10px] sm:text-xs text-gray-400 hover:text-neon-yellow hover:border-neon-yellow/50 transition-all font-mono uppercase tracking-wider cursor-default text-center"
                                     >
                                         {skill}
                                     </motion.span>
