@@ -205,7 +205,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                             className="w-full max-w-[20rem] sm:max-w-none sm:w-[22rem] md:w-[24rem]"
                         >
                             <div
-                                className="relative aspect-square p-4"
+                                className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] p-4"
                                 onMouseMove={handleMouseMove}
                                 onMouseLeave={handleMouseLeave}
                             >
