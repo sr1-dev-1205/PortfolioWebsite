@@ -8,7 +8,6 @@ import StarBackground from './components/StarBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 import CommandPalette from './components/CommandPalette';
 import DataStream from './components/DataStream';
 
@@ -21,7 +20,7 @@ const Contact = React.lazy(() => import('./components/Contact'));
 
 // Assets
 import resumePdf from './Assets/SRIDHAR-RESUME.pdf';
-import profileImg from './Assets/Profile1.jpg';
+import profileImg from './Assets/20250810_093517.jpg';
 
 const AmbientOrb = ({ color = "bg-accent-cyan" }: { color?: string }) => (
   <motion.div
@@ -61,8 +60,8 @@ function App() {
     // Optimized Intersection Observer for Active Section
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -35% 0px', // Active when section is in the middle-ish
-      threshold: 0.1
+      rootMargin: '-50% 0px -50% 0px', // Active when section crosses the center line
+      threshold: 0
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -121,7 +120,7 @@ function App() {
       } else {
         setFormStatus('error');
       }
-    } catch (error) {
+    } catch {
       setFormStatus('error');
     }
   };
@@ -147,7 +146,6 @@ function App() {
         <AmbientOrb color="bg-neon-magenta" />
       </div>
 
-      <CustomCursor />
       <CommandPalette scrollToSection={scrollToSection} />
 
       {/* Dynamic Star Background */}

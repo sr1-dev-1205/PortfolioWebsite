@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 interface SpotlightCardProps {

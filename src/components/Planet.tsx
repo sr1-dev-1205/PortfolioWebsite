@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, Suspense, useEffect } from 'react';
+import React, { useRef, useMemo, Suspense, useEffect, useCallback } from 'react';
 import { Canvas, useFrame, useLoader, ThreeEvent } from '@react-three/fiber';
 import { Preload } from '@react-three/drei';
 import * as THREE from 'three';
@@ -31,20 +31,20 @@ const Moon = React.memo(({ isPaused }: { isPaused: boolean }) => {
         window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         []);
 
-    const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
+    const handlePointerDown = useCallback((e: ThreeEvent<PointerEvent>) => {
         state.current.isDragging = true;
         state.current.previousMouseX = e.clientX;
         document.body.style.cursor = 'grabbing';
         e.stopPropagation();
-    };
+    }, []);
 
-    const handlePointerUp = () => {
+    const handlePointerUp = useCallback(() => {
         state.current.isDragging = false;
         document.body.style.cursor = 'auto';
         state.current.targetVelocity = BASE_SPIN;
-    };
+    }, []);
 
-    const handlePointerMove = (e: ThreeEvent<PointerEvent>) => {
+    const handlePointerMove = useCallback((e: ThreeEvent<PointerEvent>) => {
         if (!state.current.isDragging) return;
 
         const deltaX = e.clientX - state.current.previousMouseX;
@@ -54,7 +54,7 @@ const Moon = React.memo(({ isPaused }: { isPaused: boolean }) => {
         state.current.targetVelocity = deltaX * DRAG_SENSITIVITY;
 
         e.stopPropagation();
-    };
+    }, []);
 
     useEffect(() => {
         const onUp = () => handlePointerUp();
@@ -64,7 +64,7 @@ const Moon = React.memo(({ isPaused }: { isPaused: boolean }) => {
             window.removeEventListener('pointerup', onUp);
             window.removeEventListener('pointercancel', onUp);
         };
-    }, []);
+    }, [handlePointerUp]);
 
     useFrame((_, delta) => {
         if (!groupRef.current) return;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Shield, Target, Coffee, Globe, Zap, User } from 'lucide-react';
 import { motion } from 'framer-motion';
-import RevealText from './RevealText';
+
 import CyberPanel from './CyberPanel';
 
 const About: React.FC = () => {
