@@ -199,17 +199,20 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                             loading="eager"
                                             // @ts-expect-error: fetchpriority is not yet in React types
                                             fetchpriority="high"
+                                            decoding="async"
                                             src={profileImg}
                                             alt="Sridhar Profile - Engineer"
+                                            width="350"
+                                            height="350"
                                             className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 grayscale sepia-[0.2] brightness-75 group-hover:grayscale-0 group-hover:sepia-0 group-hover:brightness-100"
                                         />
                                         
-                                        {/* Terminal Overlay Grid */}
-                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-terminal-black/80 z-10 transition-opacity duration-500 group-hover:opacity-50"></div>
+                                        {/* Terminal Overlay Grid - will-change for GPU acceleration */}
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-terminal-black/80 z-10 transition-opacity duration-500 group-hover:opacity-50 will-change-[opacity]"></div>
                                         
-                                        {/* Scanlines */}
+                                        {/* Scanlines - optimized for paint performance */}
                                         <div 
-                                            className="absolute inset-0 z-20 pointer-events-none opacity-30 group-hover:opacity-10 transition-opacity duration-500"
+                                            className="absolute inset-0 z-20 pointer-events-none opacity-30 group-hover:opacity-10 transition-opacity duration-500 will-change-[opacity]"
                                             style={{ 
                                                 backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.1) 2px, rgba(0, 240, 255, 0.1) 4px)',
                                             }}
