@@ -1,12 +1,17 @@
 
 import React from 'react';
 import SocialDock from './SocialDock';
+import TerminalStrip from './TerminalStrip';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-terminal-black py-20 relative overflow-hidden border-t border-grid-line">
-            {/* Subtle Terminal Grid */}
-            <div className="absolute inset-0 opacity-20">
+        <footer className="bg-terminal-black relative overflow-hidden">
+            {/* Terminal Strip - Live Activity Feed */}
+            <TerminalStrip />
+            
+            <div className="py-20 border-t border-grid-line">
+                {/* Subtle Terminal Grid */}
+                <div className="absolute inset-0 opacity-20">
                 <div 
                     className="w-full h-full"
                     style={{ 
@@ -21,7 +26,7 @@ const Footer: React.FC = () => {
                     {/* Brand Identity */}
                     <div className="space-y-3 sm:space-y-4 text-center md:text-left">
                         <div className="text-xl sm:text-2xl font-cyber font-black tracking-tighter text-white uppercase">
-                            SRIDHAR<span className="neon-text-cyan">.</span>DEV
+                            SRIDHAR<span className="neon-text-cyan">-</span>DEV
                         </div>
                         <p className="text-gray-400 text-[9px] sm:text-[10px] font-mono max-w-xs uppercase tracking-[0.3em]">
                             //_PORTFOLIO_v3.0.1
@@ -48,6 +53,7 @@ const Footer: React.FC = () => {
                         <span>REACH: WORLDWIDE</span>
                     </div>
                 </div>
+            </div>
             </div>
         </footer>
     );
