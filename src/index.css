@@ -43,6 +43,32 @@
     box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
   }
 
+  /* Custom Scrollbar - Terminal Theme */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 2px;
+    transition: background 0.3s;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 240, 255, 0.5);
+  }
+
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 240, 255, 0.3) rgba(15, 23, 42, 0.3);
+  }
+
   button:focus-visible,
   a:focus-visible,
   input:focus-visible,
@@ -253,6 +279,24 @@
   
   .animation-delay-500 {
     animation-delay: 500ms;
+  }
+
+  /* Horizontal Scroll Animation for Terminal Strip */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  .animate-scroll-left:hover {
+    animation-play-state: paused;
   }
 
   .animation-delay-1000 {

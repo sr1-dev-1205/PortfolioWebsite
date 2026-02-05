@@ -1,23 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Download } from 'lucide-react';
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Magnetic from './Magnetic';
 import CyberPanel from './CyberPanel';
 import SocialDock from './SocialDock';
+import TerminalTyping from './TerminalTyping';
 interface HeroProps {
     scrollToSection: (sectionId: string) => void;
     resumePdf: string;
     profileImg: string;
 }
 const roles = ["FULLSTACK DEVELOPER", "AI ENGINEER"];
+
+const terminalCommands = [
+  {
+    prompt: "$",
+    text: "whoami",
+    delay: 500,
+    color: "text-gray-300"
+  },
+  {
+    prompt: ">",
+    text: "Full Stack Developer | AI Engineer",
+    delay: 200,
+    color: "text-neon-green"
+  },
+  {
+    prompt: "$",
+    text: "ls skills/",
+    delay: 800,
+    color: "text-gray-300"
+  },
+  {
+    text: "React.tsx  JavaScript.js  Node.js ",
+    delay: 200,
+    color: "text-neon-cyan"
+  }
+];
 const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) => {
-    const [roleIndex, setRoleIndex] = useState(0);
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setRoleIndex((prev) => (prev + 1) % roles.length);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
@@ -34,7 +54,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
         y.set(0);
     };
     return (
-        <section id="home" className="min-h-screen flex items-center justify-center relative md:overflow-hidden pt-24 pb-12 md:pt-32 md:pb-20">
+        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 pb-12 sm:pt-24 md:pt-24 md:pb-20">
             {/* System Boot Messages */}
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -58,63 +78,59 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                 </div>
             </motion.div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-start md:items-center">
                     {/* Left: Identity Module */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-center md:text-left space-y-6 md:space-y-8 relative z-20 order-last md:order-none"
+                        className="text-center md:text-left space-y-4 sm:space-y-6 md:space-y-8 relative z-20 order-last md:order-none"
                     >
                         {/* Main Identity */}
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-cyber font-black leading-[0.85] tracking-tighter">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-cyber font-black leading-[0.85] tracking-tighter">
                             <motion.span 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 0.8, x: 0 }}
                                 transition={{ duration: 1, delay: 0.5 }}
-                                className="block text-gray-400 text-xs sm:text-sm md:text-base mb-4 md:mb-6 font-mono font-medium tracking-[0.3em] uppercase"
+                                className="block text-gray-400 text-[10px] sm:text-xs md:text-sm lg:text-base mb-3 sm:mb-4 md:mb-6 font-mono font-medium tracking-[0.3em] uppercase"
                             >
                                 &gt; ENGINEER_ID: 0x7FE4
                             </motion.span>
                             <div 
-                                className="text-neon-cyan mb-4"
+                                className="text-neon-cyan mb-3 sm:mb-4"
                                 style={{ textShadow: '0 0 15px rgba(0, 240, 255, 0.3)' }}
                             >
                                 SRIDHAR
                             </div>
                         </h1>
-                        {/* Role Classification */}
-                        <div className="space-y-3">
+                        {/* Terminal Typing Animation */}
+                        <div className="space-y-2 sm:space-y-3">
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.8 }}
-                                className="font-mono text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-[0.15em] h-8 relative overflow-hidden flex items-center justify-center md:justify-start"
+                                className="bg-terminal-surface border border-grid-line rounded-sm p-3 sm:p-4 backdrop-blur-sm"
                             >
-                                <span className="text-neon-cyan mr-2">[</span>
-                                <div className="w-[240px] sm:w-[280px] md:w-[350px] relative h-full flex items-center justify-center">
-                                    <AnimatePresence mode="wait">
-                                        <motion.span
-                                            key={roles[roleIndex]}
-                                            initial={{ y: 20, opacity: 0 }}
-                                            animate={{ y: 0, opacity: 1 }}
-                                            exit={{ y: -20, opacity: 0 }}
-                                            transition={{ duration: 0.5, ease: "easeOut" }}
-                                            className="absolute whitespace-nowrap text-xs sm:text-sm md:text-base"
-                                        >
-                                            {roles[roleIndex]}
-                                        </motion.span>
-                                    </AnimatePresence>
+                                <div className="flex items-center gap-2 mb-2 sm:mb-3 pb-2 border-b border-grid-line">
+                                    <div className="flex gap-1 sm:gap-1.5">
+                                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/70"></div>
+                                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/70"></div>
+                                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/70"></div>
+                                    </div>
+                                    <span className="text-[7px] sm:text-[8px] text-gray-500 font-mono uppercase tracking-wider">terminal</span>
                                 </div>
-                                <span className="text-neon-cyan ml-2">]</span>
+                                <TerminalTyping 
+                                    commands={terminalCommands}
+                                    typingSpeed={50}
+                                />
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1 }}
-                                className="font-mono text-[8px] sm:text-[9px] md:text-[10px] text-gray-400 uppercase tracking-[0.25em]"
+                                className="font-mono text-[7px] sm:text-[8px] md:text-[9px] lg:text-[10px] text-gray-400 uppercase tracking-[0.25em] text-center md:text-left"
                             >
-                                SPEC: REACT • TYPESCRIPT • MERN STACK
+                                SPEC: REACT • JAVASCRIPT • MERN STACK
                             </motion.div>
                         </div>
                         {/* Status Badge */}
@@ -122,10 +138,10 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.2 }}
-                            className="inline-flex items-center gap-3 px-3 py-1.5 sm:px-4 sm:py-2 bg-terminal-surface border border-grid-glow rounded-sm backdrop-blur-md"
+                            className="inline-flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-terminal-surface border border-grid-glow rounded-sm backdrop-blur-md"
                         >
                             <motion.div
-                                className="w-2 h-2 rounded-full bg-neon-green"
+                                className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-neon-green"
                                 animate={{
                                     opacity: [0.3, 1, 0.3],
                                     scale: [0.8, 1.2, 0.8],
@@ -136,55 +152,31 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                     ease: "easeInOut",
                                 }}
                             />
-                            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-neon-green">
+                            <span className="font-mono text-[8px] sm:text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-neon-green">
                                 STATUS: AVAILABLE
                             </span>
                         </motion.div>
-                        <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-xl mx-auto md:mx-0 font-sans border-l-2 border-grid-line pl-4">
-                            "Crafting high-performance digital architectures with a focus on human-centric design and pixel-perfect execution."
-                        </p>
-                        {/* Action Triggers - Full width on mobile, row on desktop */}
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start pt-6 md:pt-8">
-                            <Magnetic strength={0.15}>
-                                <button
-                                    onClick={() => scrollToSection('contact')}
-                                    className="group relative w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-neon-cyan text-terminal-black font-cyber font-black rounded-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] flex items-center justify-center border-2 border-neon-cyan uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[9px] sm:text-[10px]"
-                                >
-                                    <span className="relative z-10">INITIATE_CONTACT</span>
-                                </button>
-                            </Magnetic>
-                            <Magnetic strength={0.15}>
-                                <a
-                                    href={resumePdf}
-                                    download
-                                    className="group w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-transparent border-2 border-grid-glow rounded-sm font-cyber font-black hover:border-neon-cyan hover:bg-terminal-surface transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[9px] sm:text-[10px] text-gray-400 hover:text-neon-cyan"
-                                >
-                                    <Download className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                                    <span>DOWNLOAD.CV</span>
-                                </a>
-                            </Magnetic>
-                        </div>
                         {/* Social Links */}
-                        <div className="flex gap-3 justify-center md:justify-start pt-4 md:pt-6">
+                        <div className="flex gap-2 sm:gap-3 justify-center md:justify-start pt-3 sm:pt-4">
                             <SocialDock />
                         </div>
                     </motion.div>
-                    {/* Right: Profile HUD Terminal */}
+                    {/* Right: Profile HUD Terminal with Action Buttons */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                        className="relative flex justify-center z-10 order-first md:order-none"
+                        className="relative flex flex-col items-center z-10 order-first md:order-none space-y-4 sm:space-y-6"
                     >
                         <CyberPanel
                             label="IMG_SCANNER"
                             status="active"
                             corner="all"
                             glowColor="rgba(0, 240, 255, 0.5)"
-                            className="w-full max-w-[280px] sm:max-w-[320px] md:w-[24rem]"
+                            className="w-full max-w-[240px] sm:max-w-[280px] md:max-w-[22rem]"
                         >
                             <div
-                                className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] p-3 sm:p-4 mx-auto"
+                                className="relative w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] md:w-[320px] md:h-[320px] p-2 sm:p-3 md:p-4 mx-auto"
                                 onMouseMove={handleMouseMove}
                                 onMouseLeave={handleMouseLeave}
                             >
@@ -202,8 +194,8 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                             decoding="async"
                                             src={profileImg}
                                             alt="Sridhar Profile - Engineer"
-                                            width="350"
-                                            height="350"
+                                            width="320"
+                                            height="320"
                                             className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 grayscale sepia-[0.2] brightness-75 group-hover:grayscale-0 group-hover:sepia-0 group-hover:brightness-100"
                                         />
                                         
@@ -241,12 +233,12 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                         ></motion.div>
                                     </div>
                                     {/* Terminal Data Overlay */}
-                                    <div className="absolute bottom-4 left-4 right-4 z-40 space-y-1">
-                                        <div className="font-mono text-[8px] text-neon-cyan flex items-center justify-between bg-terminal-black/80 px-2 py-1 rounded-sm border border-grid-line">
+                                    <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 z-40 space-y-1">
+                                        <div className="font-mono text-[7px] sm:text-[8px] text-neon-cyan flex items-center justify-between bg-terminal-black/80 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm border border-grid-line">
                                             <span>ID: 0x7FE4</span>
                                             <span className="text-neon-green">● VERIFIED</span>
                                         </div>
-                                        <div className="font-mono text-[7px] text-gray-500 flex items-center justify-between bg-terminal-black/80 px-2 py-1 rounded-sm border border-grid-line">
+                                        <div className="font-mono text-[6px] sm:text-[7px] text-gray-500 flex items-center justify-between bg-terminal-black/80 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-sm border border-grid-line">
                                             <span>STATUS: AVAILABLE</span>
                                             <span>LOC: IN</span>
                                         </div>
@@ -254,6 +246,35 @@ const Hero: React.FC<HeroProps> = ({ scrollToSection, resumePdf, profileImg }) =
                                 </motion.div>
                             </div>
                         </CyberPanel>
+                        
+                        {/* Action Buttons Below Profile */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.4 }}
+                            className="w-full max-w-[240px] sm:max-w-[280px] md:max-w-[22rem] grid grid-cols-2 gap-2 sm:gap-3 md:-ml-0"
+                        >
+                            <Magnetic strength={0.15}>
+                                <button
+                                    onClick={() => scrollToSection('contact')}
+                                    className="group relative w-full px-3 py-3 sm:px-6 sm:py-4 bg-neon-cyan text-terminal-black font-cyber font-black rounded-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] flex items-center justify-center border-2 border-neon-cyan uppercase tracking-[0.15em] sm:tracking-[0.25em] text-[9px] sm:text-[10px]"
+                                >
+                                    <span className="relative z-10 sm:hidden">CONTACT</span>
+                                    <span className="relative z-10 hidden sm:inline">INITIATE_CONTACT</span>
+                                </button>
+                            </Magnetic>
+                            <Magnetic strength={0.15}>
+                                <a
+                                    href={resumePdf}
+                                    download
+                                    className="group w-full px-3 py-3 sm:px-6 sm:py-4 bg-transparent border-2 border-grid-glow rounded-sm font-cyber font-black hover:border-neon-cyan hover:bg-terminal-surface transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md uppercase tracking-[0.15em] sm:tracking-[0.25em] text-[9px] sm:text-[10px] text-gray-400 hover:text-neon-cyan"
+                                >
+                                    <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-y-1 transition-transform" />
+                                    <span className="sm:hidden">CV</span>
+                                    <span className="hidden sm:inline">DOWNLOAD.CV</span>
+                                </a>
+                            </Magnetic>
+                        </motion.div>
                     </motion.div>
                 </div>
             </div>

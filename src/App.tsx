@@ -10,6 +10,8 @@ import Hero from './components/Hero';
 import Footer from './components/Footer';
 import CommandPalette from './components/CommandPalette';
 import DataStream from './components/DataStream';
+import CursorTrail from './components/CursorTrail';
+import SectionReveal from './components/SectionReveal';
 
 // Lazy Load below-the-fold sections
 const About = React.lazy(() => import('./components/About'));
@@ -54,15 +56,35 @@ function App() {
         
         // Update active section based on scroll position
         const sections = ['home', 'about', 'skills', 'experience', 'portfolio', 'contact'];
-        const scrollPosition = window.scrollY + 200; // Offset for better detection
+        const scrollPosition = window.scrollY + window.innerHeight / 3; // Use 1/3 of viewport for better detection
         
         let currentSection = 'home';
+        let maxVisibleArea = 0;
         
         for (const sectionId of sections) {
           const element = document.getElementById(sectionId);
           if (element) {
-            const { offsetTop } = element;
-            if (scrollPosition >= offsetTop) {
+            const rect = element.getBoundingClientRect();
+            const elementTop = rect.top + window.scrollY;
+            const elementBottom = elementTop + rect.height;
+            const elementMiddle = elementTop + rect.height / 2;
+            
+            // Calculate how much of the section is in the viewport
+            const viewportTop = window.scrollY;
+            const viewportBottom = viewportTop + window.innerHeight;
+            const visibleTop = Math.max(elementTop, viewportTop);
+            const visibleBottom = Math.min(elementBottom, viewportBottom);
+            const visibleArea = Math.max(0, visibleBottom - visibleTop);
+            
+            // Prioritize section whose middle is closest to viewport center
+            const viewportCenter = viewportTop + window.innerHeight / 2;
+            const distanceFromCenter = Math.abs(elementMiddle - viewportCenter);
+            
+            // Weight: visible area - distance from center (normalized)
+            const score = visibleArea - distanceFromCenter * 0.5;
+            
+            if (score > maxVisibleArea) {
+              maxVisibleArea = score;
               currentSection = sectionId;
             }
           }
@@ -70,7 +92,7 @@ function App() {
         
         setActiveSection(currentSection);
         timeoutId = undefined!;
-      }, 50); // Reduced debounce time for faster updates
+      }, 100); // Slightly longer debounce for smoother updates
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -123,6 +145,9 @@ function App() {
   return (
     <div className="min-h-screen bg-terminal-black text-white overflow-x-hidden relative font-sans selection:bg-neon-cyan selection:text-terminal-black">
       
+      {/* Cursor Trail Effect */}
+      <CursorTrail />
+      
       {/* CYBERPUNK SYSTEM LAYERS */}
       {/* Terminal Grid */}
       <div className="fixed inset-0 cyber-grid pointer-events-none z-0"></div>
@@ -163,14 +188,28 @@ function App() {
         />
 
         <React.Suspense fallback={<div className="h-screen w-full flex items-center justify-center text-accent-cyan/50">Loading...</div>}>
-          <About />
-          <Skills />
-          <Experience />
-          <Portfolio />
-          <Contact
-            formStatus={formStatus}
-            handleContactSubmit={handleContactSubmit}
-          />
+          <SectionReveal delay={0.2}>
+            <About />
+          </SectionReveal>
+          
+          <SectionReveal delay={0.3} enableParallax parallaxOffset={30}>
+            <Skills />
+          </SectionReveal>
+          
+          <SectionReveal delay={0.2}>
+            <Experience />
+          </SectionReveal>
+          
+          <SectionReveal delay={0.3} enableParallax parallaxOffset={40}>
+            <Portfolio />
+          </SectionReveal>
+          
+          <SectionReveal delay={0.2}>
+            <Contact
+              formStatus={formStatus}
+              handleContactSubmit={handleContactSubmit}
+            />
+          </SectionReveal>
         </React.Suspense>
       </main>
 

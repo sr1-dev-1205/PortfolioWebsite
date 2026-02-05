@@ -29,25 +29,25 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled ? 'pt-0 pb-4' : 'py-6'}`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled ? 'pt-0 pb-2 sm:pb-4' : 'py-3 sm:py-6'}`}>
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
                 <div 
-                    className={`relative flex items-center justify-between h-16 px-6 rounded-sm transition-all duration-700 border-y ${isScrolled ? 'bg-terminal-dark/30 border-grid-glow shadow-[0_0_15px_rgba(0,240,255,0.15)]' : 'bg-transparent border-transparent'}`}
+                    className={`relative flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4 md:px-6 rounded-sm transition-all duration-700 border-y ${isScrolled ? 'bg-terminal-dark/30 border-grid-glow shadow-[0_0_15px_rgba(0,240,255,0.15)]' : 'bg-transparent border-transparent'}`}
                     style={isScrolled ? { backdropFilter: 'blur(3px)', WebkitBackdropFilter: 'blur(3px)' } : {}}
                 >
                     {/* Logo - System Identifier */}
-                    <div className="flex-shrink-0 cursor-pointer group flex items-center gap-3" onClick={() => scrollToSection('home')}>
-                        <div className="relative w-8 h-8 bg-gradient-to-br from-neon-cyan to-neon-blue border border-neon-cyan/50 rounded-sm flex items-center justify-center font-cyber font-black text-terminal-black text-sm transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] group-hover:scale-110">
-                            <Code2 className="w-5 h-5" />
+                    <div className="flex-shrink-0 cursor-pointer group flex items-center gap-2 sm:gap-3" onClick={() => scrollToSection('home')}>
+                        <div className="relative w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-neon-cyan to-neon-blue border border-neon-cyan/50 rounded-sm flex items-center justify-center font-cyber font-black text-terminal-black text-sm transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] group-hover:scale-110">
+                            <Code2 className="w-4 h-4 sm:w-5 sm:h-5" />
                         </div>
                         <div className="hidden sm:flex flex-col">
-                            <span className="text-[15px] font-cyber font-black tracking-[0.3em] uppercase text-neon-cyan">SRIDHAR-DEV</span>
-                            <span className="text-[7px] text-gray-400 font-mono uppercase tracking-[0.2em]">FullStack_SYS</span>
+                            <span className="text-[13px] sm:text-[14px] md:text-[15px] font-cyber font-black tracking-[0.25em] sm:tracking-[0.3em] uppercase text-neon-cyan">SRIDHAR-DEV</span>
+                            <span className="text-[6px] sm:text-[7px] text-gray-400 font-mono uppercase tracking-[0.15em] sm:tracking-[0.2em]">FullStack_SYS</span>
                         </div>
                     </div>
 
                     {/* Desktop Navigation - HUD Style */}
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                         <div className="flex items-center gap-1">
                             {['About', 'Skills', 'Experience', 'Portfolio', 'Contact'].map((item) => (
                                 <Magnetic key={item} strength={0.1}>
@@ -73,22 +73,47 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isMenuOpen, setIsMenuOpe
                         </div>
                     </div>
 
+                    {/* Tablet Navigation - Compact */}
+                    <div className="hidden md:flex lg:hidden items-center gap-1">
+                        {['About', 'Skills', 'Portfolio', 'Contact'].map((item) => (
+                            <Magnetic key={item} strength={0.1}>
+                                <button
+                                    onClick={() => scrollToSection(item.toLowerCase())}
+                                    className={`relative px-3 py-2 text-[9px] font-mono font-bold uppercase tracking-[0.15em] transition-all duration-300 rounded-sm group ${
+                                        activeSection === item.toLowerCase() 
+                                            ? 'text-neon-cyan' 
+                                            : 'text-gray-400 hover:text-white'
+                                    }`}
+                                >
+                                    {item}
+                                    {activeSection === item.toLowerCase() && (
+                                        <motion.div
+                                            layoutId="activeSection"
+                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-neon-cyan shadow-[0_0_10px_rgba(0,240,255,0.8)]"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </button>
+                            </Magnetic>
+                        ))}
+                    </div>
+
                     {/* Command Hint - Terminal Style */}
-                    <div className="hidden lg:flex items-center gap-2 text-[8px] text-gray-600 font-mono tracking-[0.3em] bg-terminal-surface px-3 py-1.5 rounded-sm border border-grid-line uppercase">
+                    <div className="hidden xl:flex items-center gap-2 text-[8px] text-gray-600 font-mono tracking-[0.3em] bg-terminal-surface px-3 py-1.5 rounded-sm border border-grid-line uppercase">
                         <span className="px-1.5 py-0.5 bg-terminal-black rounded-sm text-neon-cyan">CTRL</span>
                         <span>+</span>
                         <span className="px-1.5 py-0.5 bg-terminal-black rounded-sm text-neon-cyan">K</span>
                     </div>
 
                     {/* Mobile menu button - Cyberpunk Style */}
-                    <div className="md:hidden">
+                    <div className="md:hidden flex items-center">
                         <Magnetic strength={0.2}>
                             <button
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="p-3 bg-terminal-surface border border-grid-line rounded-sm text-neon-cyan hover:border-neon-cyan transition-all"
+                                className="p-2.5 sm:p-3 bg-terminal-surface border border-grid-line rounded-sm text-neon-cyan hover:border-neon-cyan transition-all"
                                 aria-label="Toggle menu"
                             >
-                                {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                                {isMenuOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
                             </button>
                         </Magnetic>
                     </div>
