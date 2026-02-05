@@ -21,7 +21,7 @@ const terminalCommands = [
   },
   {
     prompt: ">",
-    text: "Full Stack Developer | AI Engineer",
+    text: "Full Stack Developer | AI-Powered Application",
     delay: 200,
     color: "text-neon-green"
   },
