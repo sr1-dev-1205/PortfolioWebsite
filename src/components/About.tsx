@@ -3,7 +3,7 @@ import { Shield, Target, Globe, Zap, User, FolderGit2, Layers, Briefcase, Clock,
 import { motion } from 'framer-motion';
 
 import CyberPanel from './CyberPanel';
-import CodeGuessGame from './CodeGuessGame';
+// import CodeGuessGame from './CodeGuessGame';
 
 const About: React.FC = () => {
     const stats = [
@@ -146,8 +146,8 @@ const About: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Code Guess Game Section */}
-                <motion.div
+                {/* Code Guess Game Section - COMMENTED OUT FOR LATER USE */}
+                {/* <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.3 }}
@@ -155,7 +155,7 @@ const About: React.FC = () => {
                     className="mt-20 pt-12 border-t border-grid-line"
                 >
                     <CodeGuessGame />
-                </motion.div>
+                </motion.div> */}
             </div>
         </section>
     );

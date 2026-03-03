@@ -6,6 +6,8 @@ import CyberPanel from './CyberPanel';
 import collegeImg from '../Assets/projects/Hitech.png';
 import aarogyaImg from '../Assets/projects/AarogyaJal.png';
 import portfolioImg from '../Assets/projects/Portfolio.png';
+import hiceImg from '../Assets/projects/HICE.png';
+import hotelBillingImg from '../Assets/projects/HotelBilling.png';
 
 const Portfolio: React.FC = () => {
     const projects = [
@@ -29,6 +31,20 @@ const Portfolio: React.FC = () => {
             tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
             live: 'https://sridhar-dev-portfolio.vercel.app',
             image: portfolioImg
+        },
+        {
+            title: 'HICE — Multi-Page React SPA',
+            description: 'Internship project: Developed a structured multi-page SPA with reusable layouts, client-side routing, and IntersectionObserver-based lazy loading. Designed route-level loading logic and optimized component rendering for smoother navigation.',
+            tech: ['React', 'TypeScript', 'Vite', 'React Router'],
+            live: 'https://hice.ac.in',
+            image: hiceImg
+        },
+        {
+            title: 'Offline Hotel Billing System',
+            description: 'Built an offline billing application using Electron and SQLite with WAL mode for transactional durability. Implemented crash recovery, automated backups, and defensive initialization to ensure data integrity.',
+            tech: ['Electron', 'SQLite', 'React', 'Node.js'],
+            live: '',
+            image: hotelBillingImg
         }
     ];
 
@@ -129,16 +145,22 @@ const Portfolio: React.FC = () => {
 
                                         {/* Overlay Content */}
                                         <div className="relative h-full flex flex-col items-center justify-end pb-12 p-6">
-                                            <a 
-                                                href={project.live} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                                className="px-8 py-3 bg-neon-cyan text-terminal-black font-cyber font-bold uppercase tracking-[0.2em] rounded-sm hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all flex items-center gap-2 transform hover:scale-105 cursor-pointer z-50"
-                                                style={{ transform: 'translateZ(30px)' }}
-                                            >
-                                                <span>View Live</span>
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
+                                            {project.live ? (
+                                                <a 
+                                                    href={project.live} 
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer"
+                                                    className="px-8 py-3 bg-neon-cyan text-terminal-black font-cyber font-bold uppercase tracking-[0.2em] rounded-sm hover:shadow-[0_0_20px_rgba(0,240,255,0.6)] transition-all flex items-center gap-2 transform hover:scale-105 cursor-pointer z-50"
+                                                    style={{ transform: 'translateZ(30px)' }}
+                                                >
+                                                    <span>View Live</span>
+                                                    <ExternalLink className="w-4 h-4" />
+                                                </a>
+                                            ) : (
+                                                <span className="px-6 py-2 border border-grid-line text-gray-400 font-mono text-[10px] uppercase tracking-widest rounded-sm">
+                                                    // OFFLINE_APP
+                                                </span>
+                                            )}
                                         </div>
                                     </CyberPanel>
                                 </div>
